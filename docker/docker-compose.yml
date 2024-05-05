@@ -1,0 +1,43 @@
+version: '3.8'
+services:
+  app:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    container_name: event-app
+    restart: unless-stopped
+    working_dir: /var/www/
+    volumes:
+      - ../src:/var/www
+
+  server:
+    image: nginx:alpine
+    container_name: event-server
+    restart: unless-stopped
+    ports:
+      - 9000:80
+    volumes:
+      - ../src:/var/www
+      - ./nginx:/etc/nginx/conf.d
+
+  database:
+    image: mariadb:latest
+    container_name: event-database
+    restart: unless-stopped
+    ports:
+      - 3309:3306
+    command: ['--sql_mode=']
+    environment:
+      MARIADB_ROOT_PASSWORD: P@ssw0rd#db
+      TZ: Asia/Bangkok
+
+  phpmyadmin:
+    image: phpmyadmin:latest
+    container_name: event-phpmyadmin
+    restart: unless-stopped
+    ports:
+      - 9001:80
+    environment:
+      PMA_HOST: database
+      UPLOAD_LIMIT: 20M
+  

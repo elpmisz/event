@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: database
--- Generation Time: May 05, 2024 at 02:28 PM
+-- Generation Time: May 06, 2024 at 02:22 PM
 -- Server version: 11.3.2-MariaDB-1:11.3.2+maria~ubu2204
 -- PHP Version: 8.2.18
 
@@ -403,10 +403,36 @@ INSERT INTO `customer_type` (`id`, `uuid`, `name`, `status`, `updated`, `created
 -- --------------------------------------------------------
 
 --
--- Table structure for table `event`
+-- Table structure for table `event_item`
 --
 
-CREATE TABLE `event` (
+CREATE TABLE `event_item` (
+  `id` int(11) NOT NULL,
+  `event_id` int(11) NOT NULL,
+  `name` varchar(200) NOT NULL,
+  `price` decimal(20,2) NOT NULL,
+  `text` text NOT NULL,
+  `status` int(1) NOT NULL DEFAULT 1,
+  `updated` datetime DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `event_item`
+--
+
+INSERT INTO `event_item` (`id`, `event_id`, `name`, `price`, `text`, `status`, `updated`) VALUES
+(1, 1, 'Single Member Pack', 250.00, '1 Member : Full registration + Gala Dinner', 1, '2024-05-06 20:58:44'),
+(2, 1, 'Single Member with Room Pack', 350.00, '1 Member : Full registration + Gala Dinner + 1 room 2 nights (Double room for 1 member)*', 1, '2024-05-06 20:58:44'),
+(3, 1, 'Duo Member with Room Pack', 600.00, '2 Members : 2 Full registrations + 2 Gala Dinner + 1 room 2 nights (Shared Double room for 2 members)*', 1, '2024-05-06 20:58:44'),
+(4, 1, 'Single Non-member Pack', 400.00, '1 Non-member : Full registration + Gala Dinne', 1, '2024-05-06 20:58:44');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `event_request`
+--
+
+CREATE TABLE `event_request` (
   `id` int(11) NOT NULL,
   `uuid` binary(20) NOT NULL,
   `name` varchar(200) NOT NULL,
@@ -420,11 +446,11 @@ CREATE TABLE `event` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `event`
+-- Dumping data for table `event_request`
 --
 
-INSERT INTO `event` (`id`, `uuid`, `name`, `topic`, `date`, `start`, `end`, `status`, `updated`, `created`) VALUES
-(1, 0x62323834663261612d306165372d313165662d39, '[APMA] ASIAN PEST MANAGEMENT ASSOCIATION', '- Future Outlook of Pest Management\r\n- Business Outlook &amp; Innovation\r\n- Termite and General Pest Control Sessions\r\n- Vector Control Situation around Asia\r\n- New Trends in Urban Pest Management', '10/06/2024 - 11/06/2024', '2024-06-10', '2024-06-11', 1, NULL, '2024-05-05 20:59:32');
+INSERT INTO `event_request` (`id`, `uuid`, `name`, `topic`, `date`, `start`, `end`, `status`, `updated`, `created`) VALUES
+(1, 0x35303963636636372d306261372d313165662d61, '[APMA] ASIAN PEST MANAGEMENT ASSOCIATION', '- Future Outlook of Pest Management\r\n- Business Outlook &amp;amp; Innovation\r\n- Termite and General Pest Control Sessions\r\n- Vector Control Situation around Asia\r\n- New Trends in Urban Pest Management', '10/06/2024 - 11/06/2024', '2024-06-10', '2024-06-11', 1, '2024-05-06 20:58:44', '2024-05-06 19:51:11');
 
 -- --------------------------------------------------------
 
@@ -516,9 +542,15 @@ ALTER TABLE `customer_type`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `event`
+-- Indexes for table `event_item`
 --
-ALTER TABLE `event`
+ALTER TABLE `event_item`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `event_request`
+--
+ALTER TABLE `event_request`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -562,9 +594,15 @@ ALTER TABLE `customer_type`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
--- AUTO_INCREMENT for table `event`
+-- AUTO_INCREMENT for table `event_item`
 --
-ALTER TABLE `event`
+ALTER TABLE `event_item`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT for table `event_request`
+--
+ALTER TABLE `event_request`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --

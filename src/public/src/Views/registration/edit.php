@@ -1,16 +1,16 @@
 <?php
 $menu = "service";
-$page = "service-event";
+$page = "service-registration";
 include_once(__DIR__ . "/../layout/header.php");
 
 $param = (isset($params) ? explode("/", $params) : die(header("Location: /error")));
 $uuid = (isset($param[0]) ? $param[0] : die(header("Location: /error")));
 
-use App\Classes\Event;
+use App\Classes\registration;
 
-$EVENT = new Event();
-$row = $EVENT->event_view([$uuid]);
-$items = $EVENT->item_view([$uuid]);
+$registration = new registration();
+$row = $registration->registration_view([$uuid]);
+$items = $registration->item_view([$uuid]);
 $id = (!empty($row['id']) ? $row['id'] : "");
 $uuid = (!empty($row['uuid']) ? $row['uuid'] : "");
 $name = (!empty($row['name']) ? $row['name'] : "");
@@ -27,7 +27,7 @@ $inactive = (!empty($row['status']) && intval($row['status']) === 2 ? "checked" 
         <h4 class="text-center">รายละเอียด</h4>
       </div>
       <div class="card-body">
-        <form action="/event/edit" method="POST" class="needs-validation" novalidate enctype="multipart/form-data">
+        <form action="/registration/edit" method="POST" class="needs-validation" novalidate enctype="multipart/form-data">
 
           <div class="row mb-2" style="display: none;">
             <label class="col-xl-2 offset-xl-2 col-form-label">ID</label>
@@ -165,7 +165,7 @@ $inactive = (!empty($row['status']) && intval($row['status']) === 2 ? "checked" 
               </button>
             </div>
             <div class="col-xl-3 mb-2">
-              <a href="/event" class="btn btn-sm btn-danger btn-block">
+              <a href="/registration" class="btn btn-sm btn-danger btn-block">
                 <i class="fa fa-arrow-left pr-2"></i>กลับ
               </a>
             </div>
@@ -181,7 +181,7 @@ $inactive = (!empty($row['status']) && intval($row['status']) === 2 ? "checked" 
 <?php include_once(__DIR__ . "/../layout/footer.php"); ?>
 <script>
   $(".date-input").on("keydown", function(e) {
-    e.preventDefault();
+    e.prregistrationDefault();
   });
 
   $(".date-input").daterangepicker({
@@ -229,7 +229,7 @@ $inactive = (!empty($row['status']) && intval($row['status']) === 2 ? "checked" 
 
   $(document).on("click", ".item-delete", function(e) {
     let id = $(this).prop("id");
-    e.preventDefault();
+    e.prregistrationDefault();
     Swal.fire({
       title: "ยืนยันที่จะทำรายการ?",
       icon: "question",
@@ -240,7 +240,7 @@ $inactive = (!empty($row['status']) && intval($row['status']) === 2 ? "checked" 
       cancelButtonText: "ปิด",
     }).then((result) => {
       if (result.value) {
-        axios.post("/event/item-delete", {
+        axios.post("/registration/item-delete", {
           id: id,
         }).then((res) => {
           let result = res.data;

@@ -1,23 +1,23 @@
 <?php
 $menu = "service";
-$page = "service-event";
+$page = "service-registration";
 include_once(__DIR__ . "/../layout/header.php");
 ?>
 <div class="row">
   <div class="col-xl-12">
     <div class="card shadow">
       <div class="card-header">
-        <h4 class="text-center">EVENT</h4>
+        <h4 class="text-center">REGISTRATION</h4>
       </div>
       <div class="card-body">
         <div class="row justify-content-end mb-2">
           <div class="col-xl-3 mb-2">
-            <a href="/event/export" class="btn btn-success btn-sm btn-block">
+            <a href="/registration/export" class="btn btn-success btn-sm btn-block">
               <i class="fas fa-download pr-2"></i>นำข้อมูลออก
             </a>
           </div>
           <div class="col-xl-3 mb-2">
-            <a href="/event/create" class="btn btn-primary btn-sm btn-block">
+            <a href="/registration/create" class="btn btn-primary btn-sm btn-block">
               <i class="fas fa-plus pr-2"></i>เพิ่ม
             </a>
           </div>
@@ -49,29 +49,29 @@ include_once(__DIR__ . "/../layout/header.php");
 
 <?php include_once(__DIR__ . "/../layout/footer.php"); ?>
 <script>
-  filter_datatable();
+  // filter_datatable();
 
-  function filter_datatable() {
-    let datatable = $(".data").DataTable({
-      scrollX: true,
-      serverSide: true,
-      searching: true,
-      order: [],
-      ajax: {
-        url: "/event/data",
-        type: "POST",
-      },
-      columnDefs: [{
-        targets: [0],
-        className: "text-center",
-      }]
-    });
-  };
+  // function filter_datatable() {
+  //   let datatable = $(".data").DataTable({
+  //     scrollX: true,
+  //     serverSide: true,
+  //     searching: true,
+  //     order: [],
+  //     ajax: {
+  //       url: "/registration/data",
+  //       type: "POST",
+  //     },
+  //     columnDefs: [{
+  //       targets: [0],
+  //       className: "text-center",
+  //     }]
+  //   });
+  // };
 
   $(document).on("click", ".btn-delete", function(e) {
     let uuid = ($(this).prop("id") ? $(this).prop("id") : "");
 
-    e.preventDefault();
+    e.prregistrationDefault();
     Swal.fire({
       title: "ยืนยันที่จะทำรายการ?",
       icon: "question",
@@ -82,7 +82,7 @@ include_once(__DIR__ . "/../layout/header.php");
       cancelButtonText: "ปิด",
     }).then((result) => {
       if (result.value) {
-        axios.post("/event/delete", {
+        axios.post("/registration/delete", {
           uuid: uuid
         }).then((res) => {
           let result = res.data;

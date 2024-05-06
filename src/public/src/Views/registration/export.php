@@ -6,12 +6,12 @@ error_reporting(E_ALL);
 date_default_timezone_set("Asia/Bangkok");
 include_once(__DIR__ . "/../../../vendor/autoload.php");
 
-use App\Classes\Event;
+use App\Classes\registration;
 use App\Classes\Validation;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
-$EVENT = new Event();
+$registration = new registration();
 $VALIDATION = new Validation();
 $SPREADSHEET = new Spreadsheet();
 $WRITER = new Xlsx($SPREADSHEET);
@@ -34,12 +34,12 @@ $STYLEHEADER = [
   ]
 ];
 
-$data = $EVENT->event_export();
+$data = $registration->registration_export();
 $columns = ["NAME", "TOPIC", "DATE", "PACKAGE", "PRICE", "TEXT", "STATUS", "CREATED"];
 
 ob_start();
 $date = date('Y-m-d');
-$filename = "{$date}_event.csv";
+$filename = "{$date}_registration.csv";
 header("Content-Encoding: UTF-8");
 header("Content-Type: text/csv; charset=utf-8");
 header("Content-Disposition: attachment; filename={$filename}");

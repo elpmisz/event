@@ -6,7 +6,7 @@ error_reporting(E_ALL);
 date_default_timezone_set("Asia/Bangkok");
 include_once(__DIR__ . "/../../../vendor/autoload.php");
 
-use App\Classes\Event;
+use App\Classes\registration;
 use App\Classes\User;
 use App\Classes\Validation;
 use Firebase\JWT\JWT;
@@ -29,7 +29,7 @@ try {
 }
 
 $USER = new User();
-$EVENT = new Event();
+$registration = new registration();
 $VALIDATION = new Validation();
 
 $user = $USER->user_view_email([$email]);
@@ -49,13 +49,13 @@ if ($action === "create") {
     $start = date("Y-m-d", strtotime(str_replace("/", "-", trim($conv[0]))));
     $end = date("Y-m-d", strtotime(str_replace("/", "-", trim($conv[1]))));
 
-    $count = $EVENT->event_count([$name]);
+    $count = $registration->registration_count([$name]);
     if (intval($count) > 0) {
-      $VALIDATION->alert("danger", "ข้อมูลซ้ำในระบบ!", "/event");
+      $VALIDATION->alert("danger", "ข้อมูลซ้ำในระบบ!", "/registration");
     }
 
-    $EVENT->event_insert([$name, $topic, $date, $start, $end]);
-    $event_id = $EVENT->last_insert_id();
+    $registration->registration_insert([$name, $topic, $date, $start, $end]);
+    $registration_id = $registration->last_insert_id();
 
     foreach ($_POST['item_name'] as $key => $value) {
       $item_name = (isset($_POST['item_name'][$key]) ? $VALIDATION->input($_POST['item_name'][$key]) : "");
@@ -63,11 +63,11 @@ if ($action === "create") {
       $item_text = (isset($_POST['item_text'][$key]) ? $VALIDATION->input($_POST['item_text'][$key]) : "");
 
       if (!empty($item_name)) {
-        $EVENT->item_insert([$event_id, $item_name, $item_price, $item_text]);
+        $registration->item_insert([$registration_id, $item_name, $item_price, $item_text]);
       }
     }
 
-    $VALIDATION->alert("success", "ดำเนินการเรียบร้อย!", "/event");
+    $VALIDATION->alert("success", "ดำเนินการเรียบร้อย!", "/registration");
   } catch (PDOException $e) {
     die($e->getMessage());
   }
@@ -86,7 +86,7 @@ if ($action === "edit") {
     $start = date("Y-m-d", strtotime(str_replace("/", "-", trim($conv[0]))));
     $end = date("Y-m-d", strtotime(str_replace("/", "-", trim($conv[1]))));
 
-    $EVENT->event_update([$name, $topic, $date, $start, $end, $status, $uuid]);
+    $registration->registration_update([$name, $topic, $date, $start, $end, $status, $uuid]);
 
     foreach ($_POST['item__id'] as $key => $value) {
       $item__id = (isset($_POST['item__id'][$key]) ? $VALIDATION->input($_POST['item__id'][$key]) : "");
@@ -95,7 +95,7 @@ if ($action === "edit") {
       $item__text = (isset($_POST['item__text'][$key]) ? $VALIDATION->input($_POST['item__text'][$key]) : "");
 
       if (!empty($item__id)) {
-        $EVENT->item_update([$item__name, $item__price, $item__text, $item__id]);
+        $registration->item_update([$item__name, $item__price, $item__text, $item__id]);
       }
     }
 
@@ -105,10 +105,10 @@ if ($action === "edit") {
       $item_text = (isset($_POST['item_text'][$key]) ? $VALIDATION->input($_POST['item_text'][$key]) : "");
 
       if (!empty($item_name)) {
-        $EVENT->item_insert([$event_id, $item_name, $item_price, $item_text]);
+        $registration->item_insert([$registration_id, $item_name, $item_price, $item_text]);
       }
     }
-    $VALIDATION->alert("success", "ดำเนินการเรียบร้อย!", "/event/edit/{$uuid}");
+    $VALIDATION->alert("success", "ดำเนินการเรียบร้อย!", "/registration/edit/{$uuid}");
   } catch (PDOException $e) {
     die($e->getMessage());
   }
@@ -120,7 +120,7 @@ if ($action === "delete") {
     $uuid = $data['uuid'];
 
     if (!empty($uuid)) {
-      $EVENT->event_delete([$uuid]);
+      $registration->registration_delete([$uuid]);
       $VALIDATION->alert("success", "ดำเนินการเรียบร้อย!");
       echo json_encode(200);
     } else {
@@ -138,7 +138,7 @@ if ($action === "item-delete") {
     $id = $data['id'];
 
     if (!empty($id)) {
-      $EVENT->item_delete([$id]);
+      $registration->item_delete([$id]);
       $VALIDATION->alert("success", "ดำเนินการเรียบร้อย!");
       echo json_encode(200);
     } else {
@@ -159,7 +159,7 @@ if ($action === "import") {
     $file_extension = pathinfo($file_name, PATHINFO_EXTENSION);
 
     if (!in_array($file_extension, $file_allow)) :
-      $VALIDATION->alert("danger", "เฉพาะไฟล์ XLS XLSX CSV!", "/event");
+      $VALIDATION->alert("danger", "เฉพาะไฟล์ XLS XLSX CSV!", "/registration");
     endif;
 
     if ($file_extension === "xls") {
@@ -186,14 +186,14 @@ if ($action === "import") {
         $name_en = (isset($value[1]) ? $value[1] : "");
         $code = (isset($value[2]) ? $value[2] : "");
 
-        $count = $EVENT->event_count([$name_th]);
+        $count = $registration->registration_count([$name_th]);
         if (intval($count) === 0) {
-          $EVENT->event_insert([$name_th, $name_en, $code]);
+          $registration->registration_insert([$name_th, $name_en, $code]);
         }
       }
     }
 
-    $VALIDATION->alert("success", "ดำเนินการเรียบร้อย!", "/event");
+    $VALIDATION->alert("success", "ดำเนินการเรียบร้อย!", "/registration");
   } catch (PDOException $e) {
     die($e->getMessage());
   }
@@ -201,7 +201,7 @@ if ($action === "import") {
 
 if ($action === "data") {
   try {
-    $result = $EVENT->event_data();
+    $result = $registration->registration_data();
     echo json_encode($result);
   } catch (PDOException $e) {
     die($e->getMessage());

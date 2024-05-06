@@ -4,6 +4,7 @@ $home_index = ($page === "home-index" ? 'class="active"' : "");
 
 $service_menu = (isset($menu) && ($menu === "service") ? "show" : "");
 $service_event = ($page === "service-event" ? 'class="active"' : "");
+$service_registration = ($page === "service-registration" ? 'class="active"' : "");
 
 $user_menu = (isset($menu) && ($menu === "user") ? "show" : "");
 $user_profile = ($page === "user-profile" ? 'class="active"' : "");
@@ -47,6 +48,12 @@ $setting_country = ($page === "setting-country" ? 'class="active"' : "");
           <a href="/event">
             <i class="fa fa-bars pr-2"></i>
             EVENT
+          </a>
+        </li>
+        <li <?php echo $service_registration ?>>
+          <a href="/registration">
+            <i class="fa fa-bars pr-2"></i>
+            REGISTRATION
           </a>
         </li>
       </ul>

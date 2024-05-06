@@ -21,7 +21,7 @@ class Event
 
   public function event_count($data)
   {
-    $sql = "SELECT COUNT(*) FROM event.event WHERE name = ?";
+    $sql = "SELECT COUNT(*) FROM event.event_request WHERE name = ?";
     $stmt = $this->dbcon->prepare($sql);
     $stmt->execute($data);
     return $stmt->fetchColumn();
@@ -29,22 +29,43 @@ class Event
 
   public function event_insert($data)
   {
-    $sql = "INSERT INTO event.event(`uuid`, `name`, `topic`, `date`, `start`, `end`) VALUES (uuid(),?,?,?,?,?)";
+    $sql = "INSERT INTO event.event_request(`uuid`, `name`, `topic`, `date`, `start`, `end`) VALUES (uuid(),?,?,?,?,?)";
+    $stmt = $this->dbcon->prepare($sql);
+    return $stmt->execute($data);
+  }
+
+  public function item_insert($data)
+  {
+    $sql = "INSERT INTO event.event_item(`event_id`, `name`, `price`, `text`) VALUES (?,?,?,?)";
     $stmt = $this->dbcon->prepare($sql);
     return $stmt->execute($data);
   }
 
   public function event_view($data)
   {
-    $sql = "SELECT * FROM event.event a WHERE a.uuid = ?";
+    $sql = "SELECT * FROM event.event_request a WHERE a.uuid = ?";
     $stmt = $this->dbcon->prepare($sql);
     $stmt->execute($data);
     return $stmt->fetch();
   }
 
+  public function item_view($data)
+  {
+    $sql = "SELECT b.id,b.`name`,b.price,b.text
+    FROM event.event_request a
+    LEFT JOIN event.event_item b
+    ON a.id = b.event_id
+    WHERE a.`uuid` = ?
+    AND b.status = 1
+    ORDER BY b.id ASC";
+    $stmt = $this->dbcon->prepare($sql);
+    $stmt->execute($data);
+    return $stmt->fetchAll();
+  }
+
   public function event_update($data)
   {
-    $sql = "UPDATE event.event SET
+    $sql = "UPDATE event.event_request SET
     name = ?,
     topic = ?,
     date = ?,
@@ -57,9 +78,21 @@ class Event
     return $stmt->execute($data);
   }
 
+  public function item_update($data)
+  {
+    $sql = "UPDATE event.event_item SET
+    name = ?,
+    price = ?,
+    text = ?,
+    updated = NOW()
+    WHERE id = ?";
+    $stmt = $this->dbcon->prepare($sql);
+    return $stmt->execute($data);
+  }
+
   public function event_delete($data)
   {
-    $sql = "UPDATE event.event SET
+    $sql = "UPDATE event.event_request SET
     status = 0,
     updated = NOW()
     WHERE uuid = ?";
@@ -67,9 +100,20 @@ class Event
     return $stmt->execute($data);
   }
 
+  public function item_delete($data)
+  {
+    $sql = "UPDATE event.event_item SET
+    status = 0,
+    updated = NOW()
+    WHERE id = ?";
+    $stmt = $this->dbcon->prepare($sql);
+    return $stmt->execute($data);
+  }
+
   public function event_export()
   {
     $sql = "SELECT a.`name`,a.topic,a.date,
+    b.`name`,b.price,b.text,
     (
       CASE
         WHEN a.status = 1 THEN 'ใช้งาน'
@@ -78,17 +122,18 @@ class Event
       END
     ) status_name,
     DATE_FORMAT(a.created, '%d/%m/%Y, %H:%i น.') created
-    FROM event.event a
+    FROM event.event_request a
+    LEFT JOIN event.event_item b
+    ON a.id = b.event_id
     WHERE a.`status` IN (1,2)";
     $stmt = $this->dbcon->prepare($sql);
     $stmt->execute();
     return $stmt->fetchAll(PDO::FETCH_NUM);
   }
 
-
   public function event_data()
   {
-    $sql = "SELECT COUNT(*) FROM event.event WHERE status IN (1,2)";
+    $sql = "SELECT COUNT(*) FROM event.event_request WHERE status IN (1,2)";
     $stmt = $this->dbcon->prepare($sql);
     $stmt->execute();
     $total = $stmt->fetchColumn();
@@ -103,7 +148,7 @@ class Event
     $limit_length = (isset($_POST['length']) ? $_POST['length'] : "");
     $draw = (isset($_POST['draw']) ? $_POST['draw'] : "");
 
-    $sql = "SELECT a.id,a.`uuid`,a.`name`,a.topic,a.date,a.`start`,a.`end`,a.`status`,
+    $sql = "SELECT a.id,a.`uuid`,a.`name`,a.topic,a.date,a.`start`,a.`end`,a.`status`,GROUP_CONCAT(b.`name`) item,
     (
       CASE
         WHEN a.status = 1 THEN 'ใช้งาน'
@@ -119,12 +164,16 @@ class Event
       END
     ) status_color,
     DATE_FORMAT(a.created, '%d/%m/%Y, %H:%i น.') created
-    FROM event.event a
+    FROM event.event_request a
+    LEFT JOIN event.event_item b
+    ON a.id = b.event_id
     WHERE a.`status` IN (1,2) ";
 
     if (!empty($keyword)) {
       $sql .= " AND (a.name LIKE '%{$keyword}%' OR a.topic LIKE '%{$keyword}%') ";
     }
+
+    $sql .= " GROUP BY a.id ";
 
     if ($filter_order) {
       $sql .= " ORDER BY {$column[$order_column]} {$order_dir} ";
@@ -150,8 +199,9 @@ class Event
       $data[] = [
         $status,
         $row['name'],
-        str_replace("\n", "<br>", $row['topic']),
         str_replace("-", "-<br>", $row['date']),
+        str_replace("\n", "<br>", $row['topic']),
+        str_replace(",", "<br>", $row['item']),
       ];
     }
 

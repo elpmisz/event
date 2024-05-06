@@ -20,6 +20,22 @@ $ROUTER->map("GET", "/event/edit/[**:params]", function ($params) {
 $ROUTER->map("POST", "/event/[**:params]", function ($params) {
   require(__DIR__ . "/src/Views/event/action.php");
 });
+################### REGISTRATION ###################
+$ROUTER->map("GET", "/registration", function () {
+  require(__DIR__ . "/src/Views/registration/index.php");
+});
+$ROUTER->map("GET", "/registration/create", function () {
+  require(__DIR__ . "/src/Views/registration/create.php");
+});
+$ROUTER->map("GET", "/registration/export", function () {
+  require(__DIR__ . "/src/Views/registration/export.php");
+});
+$ROUTER->map("GET", "/registration/edit/[**:params]", function ($params) {
+  require(__DIR__ . "/src/Views/registration/edit.php");
+});
+$ROUTER->map("POST", "/registration/[**:params]", function ($params) {
+  require(__DIR__ . "/src/Views/registration/action.php");
+});
 
 ##################### SETTING #####################
 ################### CUSTOMER ###################

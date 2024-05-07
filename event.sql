@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: database
--- Generation Time: May 06, 2024 at 02:22 PM
+-- Generation Time: May 07, 2024 at 09:35 AM
 -- Server version: 11.3.2-MariaDB-1:11.3.2+maria~ubu2204
 -- PHP Version: 8.2.18
 
@@ -314,67 +314,68 @@ CREATE TABLE `customer` (
 --
 
 INSERT INTO `customer` (`id`, `uuid`, `name`, `email`, `country`, `status`, `updated`, `created`) VALUES
-(1, 0x65626433386231332d306163632d313165662d38, 'Chow-Yang Lee', '', 186, 1, NULL, '2024-05-05 17:47:51'),
-(2, 0x65626434356235642d306163632d313165662d38, 'Catherine Malveda-Baisas', '', 130, 1, NULL, '2024-05-05 17:47:51'),
-(3, 0x65626434623138622d306163632d313165662d38, 'Chris Daeyun Kim', '', 86, 1, NULL, '2024-05-05 17:47:51'),
-(4, 0x65626434663433312d306163632d313165662d38, 'Christina Liew', '', 193, 1, NULL, '2024-05-05 17:47:51'),
-(5, 0x65626435336236382d306163632d313165662d38, 'Chun-I Chiu', '', 86, 1, NULL, '2024-05-05 17:47:51'),
-(6, 0x65626435383337302d306163632d313165662d38, 'Decha Wiwatwittaya', '', 86, 1, NULL, '2024-05-05 17:47:51'),
-(7, 0x65626435636639362d306163632d313165662d38, 'Faith Oi', '', 186, 1, NULL, '2024-05-05 17:47:51'),
-(8, 0x65626436323333312d306163632d313165662d38, 'Harlan Bengardi', '', 219, 1, NULL, '2024-05-05 17:47:51'),
-(9, 0x65626436376336652d306163632d313165662d38, 'Indra Vythilingam', '', 218, 1, NULL, '2024-05-05 17:47:51'),
-(10, 0x65626436643833642d306163632d313165662d38, 'Intan Ahmad', '', 219, 1, NULL, '2024-05-05 17:47:51'),
-(11, 0x65626437316665612d306163632d313165662d38, 'Kok-Boon Neoh', '', 82, 1, NULL, '2024-05-05 17:47:51'),
-(12, 0x65626437386165662d306163632d313165662d38, 'Menandro Acda', '', 130, 1, NULL, '2024-05-05 17:47:51'),
-(13, 0x65626437636333652d306163632d313165662d38, 'Neena Singla', '', 218, 1, NULL, '2024-05-05 17:47:51'),
-(14, 0x65626438313266642d306163632d313165662d38, 'Partho Dhang', '', 130, 1, NULL, '2024-05-05 17:47:51'),
-(15, 0x65626438363163352d306163632d313165662d38, 'Rungarun Tisgratog', '', 86, 1, NULL, '2024-05-05 17:47:51'),
-(16, 0x65626438623764382d306163632d313165662d38, 'Scotty Yang', '', 71, 1, NULL, '2024-05-05 17:47:51'),
-(17, 0x65626438666562372d306163632d313165662d38, 'S Khoirul Himmi', '', 219, 1, NULL, '2024-05-05 17:47:51'),
-(18, 0x65626439343463302d306163632d313165662d38, 'S Sivakumar', '', 218, 1, NULL, '2024-05-05 17:47:51'),
-(19, 0x65626439383966622d306163632d313165662d38, 'Theeraphap Chareonviriyaphap', '', 86, 1, NULL, '2024-05-05 17:47:51'),
-(20, 0x65626439636634302d306163632d313165662d38, 'Tony Poulsen', '', 193, 1, NULL, '2024-05-05 17:47:51'),
-(21, 0x65626461313062372d306163632d313165662d38, 'Albert Lee', '', 193, 1, NULL, '2024-05-05 17:47:51'),
-(22, 0x65626461346664302d306163632d313165662d38, 'Drajat Nugraha', '', 219, 1, NULL, '2024-05-05 17:47:51'),
-(23, 0x65626461386561342d306163632d313165662d38, 'Hemang Prakash', '', 218, 1, NULL, '2024-05-05 17:47:51'),
-(24, 0x65626461636337652d306163632d313165662d38, 'Liwayway Clemente-Cordel', '', 130, 1, NULL, '2024-05-05 17:47:51'),
-(25, 0x65626462313132372d306163632d313165662d38, 'Raymond Lee', '', 151, 1, NULL, '2024-05-05 17:47:51'),
-(26, 0x65626462376464652d306163632d313165662d38, 'Selvarajan Muthiah', '', 151, 1, NULL, '2024-05-05 17:47:51'),
-(27, 0x65626462626539632d306163632d313165662d38, 'Sathes Raamachandran', '', 118, 1, NULL, '2024-05-05 17:47:51'),
-(28, 0x65626463303065652d306163632d313165662d38, 'Daniel Devan', 'devan_daniel@yahoo.com.my', 151, 1, NULL, '2024-05-05 17:47:51'),
-(29, 0x65626463336534312d306163632d313165662d38, 'Intan Noorafniza', 'iafniza@gmail.com', 151, 1, NULL, '2024-05-05 17:47:51'),
-(30, 0x65626463383130632d306163632d313165662d38, 'Wan Mohd Yusri', 'wmyusri@gmail.com', 151, 1, NULL, '2024-05-05 17:47:51'),
-(31, 0x65626463626434302d306163632d313165662d38, 'Juan Emilio', 'jeffersonsotto@cctchemicals.net', 130, 1, NULL, '2024-05-05 17:47:51'),
-(32, 0x65626464313163642d306163632d313165662d38, 'Paola Garcia', 'jeffersonsotto@cctchemicals.net', 130, 1, NULL, '2024-05-05 17:47:51'),
-(33, 0x65626464353366372d306163632d313165662d38, 'Falcone', 'jeffersonsotto@cctchemicals.net', 130, 1, NULL, '2024-05-05 17:47:51'),
-(34, 0x65626464396435322d306163632d313165662d38, 'Joel', 'jeffersonsotto@cctchemicals.net', 130, 1, NULL, '2024-05-05 17:47:51'),
-(35, 0x65626464653630302d306163632d313165662d38, 'Margarette Louise', 'nathanaelquinones@cctchemicals.net', 130, 1, NULL, '2024-05-05 17:47:51'),
-(36, 0x65626465333031362d306163632d313165662d38, 'Joshua Miguel', 'nathanaelquinones@cctchemicals.net', 130, 1, NULL, '2024-05-05 17:47:51'),
-(37, 0x65626465373137362d306163632d313165662d38, 'Jesus', 'nathanaelquinones@cctchemicals.net', 130, 1, NULL, '2024-05-05 17:47:51'),
-(38, 0x65626465626131642d306163632d313165662d38, 'Nathanael', 'nathanaelquinones@cctchemicals.net', 130, 1, NULL, '2024-05-05 17:47:51'),
-(39, 0x65626466326465312d306163632d313165662d38, 'Sotto', 'jeffersonsotto@cctchemicals.net', 130, 1, NULL, '2024-05-05 17:47:51'),
-(40, 0x65626466373337332d306163632d313165662d38, 'Ravi Shanker', 'info@surencooke.com', 179, 1, NULL, '2024-05-05 17:47:51'),
-(41, 0x65626466623966312d306163632d313165662d38, 'Rajitha', 'rajitha@surencooke.com', 179, 1, NULL, '2024-05-05 17:47:51'),
-(42, 0x65626466663839642d306163632d313165662d38, 'Rao', 'srrao4@gmail.com', 218, 1, NULL, '2024-05-05 17:47:51'),
-(43, 0x65626530333732662d306163632d313165662d38, 'Pei Li', 'juhana.ismail@rentokil-initial.com', 101, 1, NULL, '2024-05-05 17:47:51'),
-(44, 0x65626530373231372d306163632d313165662d38, 'Waie Kuan', 'carol.lam@rentokil-initial.com', 151, 1, NULL, '2024-05-05 17:47:51'),
-(45, 0x65626530616364622d306163632d313165662d38, 'Andrew', 'enquiry@servcare.com.sg', 193, 1, NULL, '2024-05-05 17:47:51'),
-(46, 0x65626530653836332d306163632d313165662d38, 'Victor', 'victor@ecospacepest.com.sg', 193, 1, NULL, '2024-05-05 17:47:51'),
-(47, 0x65626531323334652d306163632d313165662d38, 'Jianzhong Edmund', 'kershing@cleansolutions.com.sg', 193, 1, NULL, '2024-05-05 17:47:51'),
-(48, 0x65626531356362302d306163632d313165662d38, 'Mohammad Azattul', 'juhana.ismail@rentokil-initial.com', 101, 1, NULL, '2024-05-05 17:47:51'),
-(49, 0x65626531393530312d306163632d313165662d38, 'Rorifer Torres', 'juhana.ismail@rentokil-initial.com', 101, 1, NULL, '2024-05-05 17:47:51'),
-(50, 0x65626531636531652d306163632d313165662d38, 'Khiong', 'juhana.ismail@rentokil-initial.com', 101, 1, NULL, '2024-05-05 17:47:51'),
-(51, 0x65626532306136302d306163632d313165662d38, 'Tiama', 'juhana.ismail@rentokil-initial.com', 101, 1, NULL, '2024-05-05 17:47:51'),
-(52, 0x65626532366466332d306163632d313165662d38, 'Guruprasada', 'guru@ipest.in', 218, 1, NULL, '2024-05-05 17:47:51'),
-(53, 0x65626532626231342d306163632d313165662d38, 'Vasanthraj', 'guru@ipest.in', 218, 1, NULL, '2024-05-05 17:47:51'),
-(54, 0x65626532666365342d306163632d313165662d38, 'Vm Prakash', 'kiranpest8@gmail.com', 218, 1, NULL, '2024-05-05 17:47:51'),
-(55, 0x65626533336639362d306163632d313165662d38, 'Muniswamaiah', 'kiranpest8@gmail.com', 218, 1, NULL, '2024-05-05 17:47:51'),
-(56, 0x65626533386163312d306163632d313165662d38, 'Huei Ying (Nancy)', 'shin@chunghsi.com.tw', 82, 1, NULL, '2024-05-05 17:47:51'),
-(57, 0x65626533643039632d306163632d313165662d38, 'Wan Cheng (Allis)', 'shin@chunghsi.com.tw', 82, 1, NULL, '2024-05-05 17:47:51'),
-(58, 0x65626534316237322d306163632d313165662d38, 'Tyagi', 'satishtyagijpr@gmail.com', 218, 1, NULL, '2024-05-05 17:47:51'),
-(59, 0x65626534356637312d306163632d313165662d38, 'Sharma', 'satishtyagijpr@gmail.com', 218, 1, NULL, '2024-05-05 17:47:51'),
-(60, 0x65626534613739342d306163632d313165662d38, 'Ruziyatul Aznieda', 'ruziyatul.aznieda@gmail.com', 151, 1, NULL, '2024-05-05 17:47:51'),
-(61, 0x65626534653833392d306163632d313165662d38, 'Nur Amalina', 'ruziyatul.aznieda@gmail.com', 151, 1, NULL, '2024-05-05 17:47:51');
+(1, 0x39663531386438662d306332312d313165662d38, 'Bramantyo Wikantyoso', '', 219, 1, NULL, '2024-05-07 10:26:41'),
+(2, 0x39663531653339342d306332312d313165662d38, 'Chow-Yang Lee', '', 186, 1, NULL, '2024-05-07 10:26:41'),
+(3, 0x39663532356430302d306332312d313165662d38, 'Catherine Malveda-Baisas', '', 130, 1, NULL, '2024-05-07 10:26:41'),
+(4, 0x39663532613137352d306332312d313165662d38, 'Chris Daeyun Kim', '', 86, 1, NULL, '2024-05-07 10:26:41'),
+(5, 0x39663532656132622d306332312d313165662d38, 'Christina Liew', '', 193, 1, NULL, '2024-05-07 10:26:41'),
+(6, 0x39663533353638372d306332312d313165662d38, 'Chun-I Chiu', '', 86, 1, NULL, '2024-05-07 10:26:41'),
+(7, 0x39663534313464382d306332312d313165662d38, 'Decha Wiwatwittaya', '', 86, 1, NULL, '2024-05-07 10:26:41'),
+(8, 0x39663534363234642d306332312d313165662d38, 'Faith Oi', '', 186, 1, NULL, '2024-05-07 10:26:41'),
+(9, 0x39663534613866342d306332312d313165662d38, 'Harlan Bengardi', '', 219, 1, NULL, '2024-05-07 10:26:41'),
+(10, 0x39663535313638352d306332312d313165662d38, 'Indra Vythilingam', '', 218, 1, NULL, '2024-05-07 10:26:41'),
+(11, 0x39663535356239392d306332312d313165662d38, 'Intan Ahmad', '', 219, 1, NULL, '2024-05-07 10:26:41'),
+(12, 0x39663535613135312d306332312d313165662d38, 'Kok-Boon Neoh', '', 82, 1, NULL, '2024-05-07 10:26:41'),
+(13, 0x39663535653434392d306332312d313165662d38, 'Menandro Acda', '', 130, 1, NULL, '2024-05-07 10:26:41'),
+(14, 0x39663536353738662d306332312d313165662d38, 'Neena Singla', '', 218, 1, NULL, '2024-05-07 10:26:41'),
+(15, 0x39663536396461392d306332312d313165662d38, 'Partho Dhang', '', 130, 1, NULL, '2024-05-07 10:26:41'),
+(16, 0x39663536653162372d306332312d313165662d38, 'Rungarun Tisgratog', '', 86, 1, NULL, '2024-05-07 10:26:41'),
+(17, 0x39663537323364382d306332312d313165662d38, 'Scotty Yang', '', 71, 1, NULL, '2024-05-07 10:26:41'),
+(18, 0x39663537393338302d306332312d313165662d38, 'S Khoirul Himmi', '', 219, 1, NULL, '2024-05-07 10:26:41'),
+(19, 0x39663537643935382d306332312d313165662d38, 'S Sivakumar', '', 218, 1, NULL, '2024-05-07 10:26:41'),
+(20, 0x39663538323135322d306332312d313165662d38, 'Theeraphap Chareonviriyaphap', '', 86, 1, NULL, '2024-05-07 10:26:41'),
+(21, 0x39663538633931652d306332312d313165662d38, 'Tony Poulsen', '', 193, 1, NULL, '2024-05-07 10:26:41'),
+(22, 0x39663539336266372d306332312d313165662d38, 'Albert Lee', '', 193, 1, NULL, '2024-05-07 10:26:41'),
+(23, 0x39663539393032382d306332312d313165662d38, 'Drajat Nugraha', '', 219, 1, NULL, '2024-05-07 10:26:41'),
+(24, 0x39663561303235332d306332312d313165662d38, 'Hemang Prakash', '', 218, 1, NULL, '2024-05-07 10:26:41'),
+(25, 0x39663561343762662d306332312d313165662d38, 'Liwayway Clemente-Cordel', '', 130, 1, NULL, '2024-05-07 10:26:41'),
+(26, 0x39663561386432632d306332312d313165662d38, 'Raymond Lee', '', 151, 1, NULL, '2024-05-07 10:26:41'),
+(27, 0x39663561643164352d306332312d313165662d38, 'Selvarajan Muthiah', '', 151, 1, NULL, '2024-05-07 10:26:41'),
+(28, 0x39663562343739312d306332312d313165662d38, 'Sathes Raamachandran', '', 118, 1, NULL, '2024-05-07 10:26:41'),
+(29, 0x39663562613462362d306332312d313165662d38, 'Daniel Devan', 'devan_daniel@yahoo.com.my', 151, 1, NULL, '2024-05-07 10:26:41'),
+(30, 0x39663562663264632d306332312d313165662d38, 'Intan Noorafniza', 'iafniza@gmail.com', 151, 1, NULL, '2024-05-07 10:26:41'),
+(31, 0x39663563333863642d306332312d313165662d38, 'Wan Mohd Yusri', 'wmyusri@gmail.com', 151, 1, NULL, '2024-05-07 10:26:41'),
+(32, 0x39663563613834642d306332312d313165662d38, 'Juan Emilio', 'jeffersonsotto@cctchemicals.net', 130, 1, NULL, '2024-05-07 10:26:41'),
+(33, 0x39663563656465622d306332312d313165662d38, 'Paola Garcia', 'jeffersonsotto@cctchemicals.net', 130, 1, NULL, '2024-05-07 10:26:41'),
+(34, 0x39663564333239312d306332312d313165662d38, 'Falcone', 'jeffersonsotto@cctchemicals.net', 130, 1, NULL, '2024-05-07 10:26:41'),
+(35, 0x39663564643838622d306332312d313165662d38, 'Joel', 'jeffersonsotto@cctchemicals.net', 130, 1, NULL, '2024-05-07 10:26:41'),
+(36, 0x39663565363135662d306332312d313165662d38, 'Margarette Louise', 'nathanaelquinones@cctchemicals.net', 130, 1, NULL, '2024-05-07 10:26:41'),
+(37, 0x39663565616237392d306332312d313165662d38, 'Joshua Miguel', 'nathanaelquinones@cctchemicals.net', 130, 1, NULL, '2024-05-07 10:26:41'),
+(38, 0x39663565663364352d306332312d313165662d38, 'Jesus', 'nathanaelquinones@cctchemicals.net', 130, 1, NULL, '2024-05-07 10:26:41'),
+(39, 0x39663566336137372d306332312d313165662d38, 'Nathanael', 'nathanaelquinones@cctchemicals.net', 130, 1, NULL, '2024-05-07 10:26:41'),
+(40, 0x39663566623433622d306332312d313165662d38, 'Sotto', 'jeffersonsotto@cctchemicals.net', 130, 1, NULL, '2024-05-07 10:26:41'),
+(41, 0x39663630303236312d306332312d313165662d38, 'Ravi Shanker', 'info@surencooke.com', 179, 1, NULL, '2024-05-07 10:26:41'),
+(42, 0x39663630353535662d306332312d313165662d38, 'Rajitha', 'rajitha@surencooke.com', 179, 1, NULL, '2024-05-07 10:26:41'),
+(43, 0x39663630613464312d306332312d313165662d38, 'Rao', 'srrao4@gmail.com', 218, 1, NULL, '2024-05-07 10:26:41'),
+(44, 0x39663631316433662d306332312d313165662d38, 'Pei Li', 'juhana.ismail@rentokil-initial.com', 101, 1, NULL, '2024-05-07 10:26:41'),
+(45, 0x39663631366531392d306332312d313165662d38, 'Waie Kuan', 'carol.lam@rentokil-initial.com', 151, 1, NULL, '2024-05-07 10:26:41'),
+(46, 0x39663631623433652d306332312d313165662d38, 'Andrew', 'enquiry@servcare.com.sg', 193, 1, NULL, '2024-05-07 10:26:41'),
+(47, 0x39663631666163622d306332312d313165662d38, 'Victor', 'victor@ecospacepest.com.sg', 193, 1, NULL, '2024-05-07 10:26:41'),
+(48, 0x39663632393563312d306332312d313165662d38, 'Jianzhong Edmund', 'kershing@cleansolutions.com.sg', 193, 1, NULL, '2024-05-07 10:26:41'),
+(49, 0x39663632653031332d306332312d313165662d38, 'Mohammad Azattul', 'juhana.ismail@rentokil-initial.com', 101, 1, NULL, '2024-05-07 10:26:41'),
+(50, 0x39663633363061332d306332312d313165662d38, 'Rorifer Torres', 'juhana.ismail@rentokil-initial.com', 101, 1, NULL, '2024-05-07 10:26:41'),
+(51, 0x39663633616564662d306332312d313165662d38, 'Khiong', 'juhana.ismail@rentokil-initial.com', 101, 1, NULL, '2024-05-07 10:26:41'),
+(52, 0x39663633663932372d306332312d313165662d38, 'Tiama', 'juhana.ismail@rentokil-initial.com', 101, 1, NULL, '2024-05-07 10:26:41'),
+(53, 0x39663634343030352d306332312d313165662d38, 'Guruprasada', 'guru@ipest.in', 218, 1, NULL, '2024-05-07 10:26:41'),
+(54, 0x39663634623133322d306332312d313165662d38, 'Vasanthraj', 'guru@ipest.in', 218, 1, NULL, '2024-05-07 10:26:41'),
+(55, 0x39663634663739342d306332312d313165662d38, 'Vm Prakash', 'kiranpest8@gmail.com', 218, 1, NULL, '2024-05-07 10:26:41'),
+(56, 0x39663635343332392d306332312d313165662d38, 'Muniswamaiah', 'kiranpest8@gmail.com', 218, 1, NULL, '2024-05-07 10:26:41'),
+(57, 0x39663635393634652d306332312d313165662d38, 'Huei Ying (Nancy)', 'shin@chunghsi.com.tw', 82, 1, NULL, '2024-05-07 10:26:41'),
+(58, 0x39663636316637372d306332312d313165662d38, 'Wan Cheng (Allis)', 'shin@chunghsi.com.tw', 82, 1, NULL, '2024-05-07 10:26:41'),
+(59, 0x39663636366237392d306332312d313165662d38, 'Tyagi', 'satishtyagijpr@gmail.com', 218, 1, NULL, '2024-05-07 10:26:41'),
+(60, 0x39663637303631392d306332312d313165662d38, 'Sharma', 'satishtyagijpr@gmail.com', 218, 1, NULL, '2024-05-07 10:26:41'),
+(61, 0x39663637346239642d306332312d313165662d38, 'Ruziyatul Aznieda', 'ruziyatul.aznieda@gmail.com', 151, 1, NULL, '2024-05-07 10:26:41'),
+(62, 0x39663637393635612d306332312d313165662d38, 'Nur Amalina', 'ruziyatul.aznieda@gmail.com', 151, 1, NULL, '2024-05-07 10:26:41');
 
 -- --------------------------------------------------------
 
@@ -479,6 +480,117 @@ INSERT INTO `login` (`id`, `uuid`, `email`, `password`, `level`, `status`, `upda
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `registration_item`
+--
+
+CREATE TABLE `registration_item` (
+  `id` int(11) NOT NULL,
+  `registration_id` int(11) NOT NULL,
+  `customer_id` int(11) NOT NULL,
+  `status` int(1) NOT NULL DEFAULT 1,
+  `updated` datetime DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `registration_item`
+--
+
+INSERT INTO `registration_item` (`id`, `registration_id`, `customer_id`, `status`, `updated`) VALUES
+(1, 1, 1, 1, NULL),
+(2, 1, 2, 1, NULL),
+(3, 1, 3, 1, NULL),
+(4, 1, 4, 1, NULL),
+(5, 1, 5, 1, NULL),
+(6, 1, 6, 1, NULL),
+(7, 1, 7, 1, NULL),
+(8, 1, 8, 1, NULL),
+(9, 1, 9, 1, NULL),
+(10, 1, 10, 1, NULL),
+(11, 1, 11, 1, NULL),
+(12, 1, 12, 1, NULL),
+(13, 1, 13, 1, NULL),
+(14, 1, 14, 1, NULL),
+(15, 1, 15, 1, NULL),
+(16, 1, 16, 1, NULL),
+(17, 1, 17, 1, NULL),
+(18, 1, 18, 1, NULL),
+(19, 1, 19, 1, NULL),
+(20, 1, 20, 1, NULL),
+(21, 1, 21, 1, NULL),
+(22, 2, 22, 1, NULL),
+(23, 2, 23, 1, NULL),
+(24, 2, 24, 1, NULL),
+(25, 2, 25, 1, NULL),
+(26, 2, 26, 1, NULL),
+(27, 2, 27, 1, NULL),
+(28, 2, 28, 1, NULL),
+(29, 3, 29, 1, NULL),
+(30, 3, 30, 1, NULL),
+(31, 3, 31, 1, NULL),
+(32, 3, 32, 1, NULL),
+(33, 3, 33, 1, NULL),
+(34, 3, 34, 1, NULL),
+(35, 3, 35, 1, NULL),
+(36, 3, 36, 1, NULL),
+(37, 3, 37, 1, NULL),
+(38, 3, 38, 1, NULL),
+(39, 3, 39, 1, NULL),
+(40, 3, 40, 1, NULL),
+(41, 3, 41, 1, NULL),
+(42, 3, 42, 1, NULL),
+(43, 4, 43, 1, NULL),
+(44, 4, 44, 1, NULL),
+(45, 4, 45, 1, NULL),
+(46, 4, 46, 1, NULL),
+(47, 4, 47, 1, NULL),
+(48, 5, 48, 1, NULL),
+(49, 6, 49, 1, NULL),
+(50, 6, 50, 1, NULL),
+(51, 6, 51, 1, NULL),
+(52, 6, 52, 1, NULL),
+(53, 6, 53, 1, NULL),
+(54, 6, 54, 1, NULL),
+(55, 6, 55, 1, NULL),
+(56, 6, 56, 1, NULL),
+(57, 6, 57, 1, NULL),
+(58, 6, 58, 1, NULL),
+(59, 6, 59, 1, NULL),
+(60, 6, 60, 1, NULL),
+(61, 6, 61, 1, NULL),
+(62, 6, 62, 1, NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `registration_request`
+--
+
+CREATE TABLE `registration_request` (
+  `id` int(11) NOT NULL,
+  `uuid` binary(20) NOT NULL,
+  `event` int(11) NOT NULL,
+  `package` int(11) NOT NULL,
+  `type` int(11) NOT NULL,
+  `status` int(1) NOT NULL DEFAULT 1,
+  `updated` datetime DEFAULT NULL,
+  `created` datetime NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `registration_request`
+--
+
+INSERT INTO `registration_request` (`id`, `uuid`, `event`, `package`, `type`, `status`, `updated`, `created`) VALUES
+(1, 0x61316134663065632d306332632d313165662d38, 1, 0, 1, 1, NULL, '2024-05-07 11:45:30'),
+(2, 0x61316161356235372d306332632d313165662d38, 1, 0, 2, 1, NULL, '2024-05-07 11:45:30'),
+(3, 0x61316163383736372d306332632d313165662d38, 1, 1, 3, 1, NULL, '2024-05-07 11:45:30'),
+(4, 0x61316230316232612d306332632d313165662d38, 1, 2, 3, 1, NULL, '2024-05-07 11:45:30'),
+(5, 0x61316231383531612d306332632d313165662d38, 1, 4, 3, 1, NULL, '2024-05-07 11:45:30'),
+(6, 0x61316232303064382d306332632d313165662d38, 1, 3, 3, 1, NULL, '2024-05-07 11:45:30');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `system`
 --
 
@@ -560,6 +672,18 @@ ALTER TABLE `login`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `registration_item`
+--
+ALTER TABLE `registration_item`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `registration_request`
+--
+ALTER TABLE `registration_request`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `system`
 --
 ALTER TABLE `system`
@@ -585,7 +709,7 @@ ALTER TABLE `country`
 -- AUTO_INCREMENT for table `customer`
 --
 ALTER TABLE `customer`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=62;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=63;
 
 --
 -- AUTO_INCREMENT for table `customer_type`
@@ -610,6 +734,18 @@ ALTER TABLE `event_request`
 --
 ALTER TABLE `login`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `registration_item`
+--
+ALTER TABLE `registration_item`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=63;
+
+--
+-- AUTO_INCREMENT for table `registration_request`
+--
+ALTER TABLE `registration_request`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `system`

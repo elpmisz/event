@@ -54,7 +54,7 @@ include_once(__DIR__ . "/../layout/header.php");
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-body">
-        <form action="/customer/import" method="POST" class="needs-validation" novalidate enctype="multipart/form-data">
+        <form action="/customer/import" method="POST" class="needs-validation import" novalidate enctype="multipart/form-data">
           <div class="row mb-2">
             <label class="col-xl-4 col-form-label text-right">เอกสาร</label>
             <div class="col-xl-8">

@@ -12,14 +12,14 @@
     }
   ],
   "require": {
-    "firebase/php-jwt": "^6.0",
+    "firebase/php-jwt": "^6.10",
     "altorouter/altorouter": "^2.0",
     "twitter/bootstrap": "4.6.2",
     "fortawesome/font-awesome": "^6.5",
     "components/jquery": "^3.7",
     "select2/select2": "^4.0",
     "datatables/datatables": "^1.10",
-    "phpoffice/phpspreadsheet": "^1.8",
+    "phpoffice/phpspreadsheet": "^1.29",
     "mpdf/mpdf": "^8.2",
     "moment/moment": "2.26.0",
     "fullcalendar/fullcalendar": "3.10.2",

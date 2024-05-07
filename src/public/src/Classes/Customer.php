@@ -145,7 +145,7 @@ class Customer
     if ($filter_order) {
       $sql .= " ORDER BY {$column[$order_column]} {$order_dir} ";
     } else {
-      $sql .= " ORDER BY a.status ASC, b.name_en ASC ";
+      $sql .= " ORDER BY a.status ASC, b.name_en ASC, a.name ASC ";
     }
 
     $sql2 = "";

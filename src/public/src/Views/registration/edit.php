@@ -6,16 +6,19 @@ include_once(__DIR__ . "/../layout/header.php");
 $param = (isset($params) ? explode("/", $params) : die(header("Location: /error")));
 $uuid = (isset($param[0]) ? $param[0] : die(header("Location: /error")));
 
-use App\Classes\registration;
+use App\Classes\Registration;
 
-$registration = new registration();
-$row = $registration->registration_view([$uuid]);
-$items = $registration->item_view([$uuid]);
+$REGISTRATION = new Registration();
+$row = $REGISTRATION->registration_view([$uuid]);
+$items = $REGISTRATION->item_view([$uuid]);
 $id = (!empty($row['id']) ? $row['id'] : "");
 $uuid = (!empty($row['uuid']) ? $row['uuid'] : "");
-$name = (!empty($row['name']) ? $row['name'] : "");
-$topic = (!empty($row['topic']) ? $row['topic'] : "");
-$date = (!empty($row['date']) ? $row['date'] : "");
+$event = (!empty($row['event']) ? $row['event'] : "");
+$event_name = (!empty($row['event_name']) ? $row['event_name'] : "");
+$type = (!empty($row['type']) ? $row['type'] : "");
+$type_name = (!empty($row['type_name']) ? $row['type_name'] : "");
+$package = (!empty($row['package']) ? $row['package'] : "");
+$package_name = (!empty($row['package_name']) ? $row['package_name'] : "");
 $active = (!empty($row['status']) && intval($row['status']) === 1 ? "checked" : "");
 $inactive = (!empty($row['status']) && intval($row['status']) === 2 ? "checked" : "");
 ?>
@@ -41,28 +44,47 @@ $inactive = (!empty($row['status']) && intval($row['status']) === 2 ? "checked" 
               <input type="text" class="form-control form-control-sm" name="uuid" value="<?php echo $uuid ?>" readonly>
             </div>
           </div>
+
           <div class="row mb-2">
-            <label class="col-xl-2 offset-xl-2 col-form-label">ชื่อ</label>
-            <div class="col-xl-6">
-              <input type="text" class="form-control form-control-sm" name="name" value="<?php echo $name ?>" required>
+            <label class="col-xl-2 offset-xl-2 col-form-label">EVENT</label>
+            <div class="col-xl-4">
+              <select class="form-control form-control-sm event-select" name="event_id" required>
+                <?php
+                if (!empty($event)) {
+                  echo "<option value='{$event}'>{$event_name}</option>";
+                }
+                ?>
+              </select>
+              <div class="invalid-feedback">
+                กรุณากรอกข้อมูล!
+              </div>
+            </div>
+          </div>
+          <div class="row mb-2 package-div">
+            <label class="col-xl-2 offset-xl-2 col-form-label">PACKAGE</label>
+            <div class="col-xl-4">
+              <select class="form-control form-control-sm package-select" name="package_id" required>
+                <?php
+                if (!empty($package)) {
+                  echo "<option value='{$package}'>{$package_name}</option>";
+                }
+                ?>
+              </select>
               <div class="invalid-feedback">
                 กรุณากรอกข้อมูล!
               </div>
             </div>
           </div>
           <div class="row mb-2">
-            <label class="col-xl-2 offset-xl-2 col-form-label">หัวข้อ</label>
-            <div class="col-xl-6">
-              <textarea class="form-control form-control-sm" rows="5" name="topic" required><?php echo $topic ?></textarea>
-              <div class="invalid-feedback">
-                กรุณากรอกข้อมูล!
-              </div>
-            </div>
-          </div>
-          <div class="row mb-2">
-            <label class="col-xl-2 offset-xl-2 col-form-label">วันที่</label>
-            <div class="col-xl-3">
-              <input type="text" class="form-control form-control-sm date-input" name="date" value="<?php echo $date ?>" required>
+            <label class="col-xl-2 offset-xl-2 col-form-label">ประเภทลูกค้า</label>
+            <div class="col-xl-4">
+              <select class="form-control form-control-sm type-select" name="type_id" required>
+                <?php
+                if (!empty($type)) {
+                  echo "<option value='{$type}'>{$type_name}</option>";
+                }
+                ?>
+              </select>
               <div class="invalid-feedback">
                 กรุณากรอกข้อมูล!
               </div>
@@ -70,41 +92,25 @@ $inactive = (!empty($row['status']) && intval($row['status']) === 2 ? "checked" 
           </div>
 
           <div class="row justify-content-center mb-2">
-            <div class="col-sm-11">
+            <div class="col-sm-10">
               <div class="table-responsive">
                 <table class="table table-bordered table-sm item-table">
                   <thead>
                     <tr>
                       <th width="10%">#</th>
-                      <th width="30%">แพ็คเกจ</th>
-                      <th width="10%">ราคา</th>
-                      <th width="50%">รายละเอียด</th>
+                      <th width="80%">ลูกค้า</th>
                     </tr>
                   </thead>
                   <tbody>
                     <?php foreach ($items as $item) : ?>
                       <tr>
                         <td class="text-center">
+                          <a href="javascript:void(0)" class="badge badge-info font-weight-light item-qrcode" id="<?php echo $item['id'] ?>">QR Code</a>
                           <a href="javascript:void(0)" class="badge badge-danger font-weight-light item-delete" id="<?php echo $item['id'] ?>">ลบ</a>
                           <input type="hidden" class="form-control form-control-sm text-center" name="item__id[]" value="<?php echo $item['id'] ?>" readonly>
                         </td>
                         <td class="text-left">
-                          <textarea class="form-control form-control-sm" rows="3" name="item__name[]" required><?php echo $item['name'] ?></textarea>
-                          <div class="invalid-feedback">
-                            กรุณากรอกข้อมูล!
-                          </div>
-                        </td>
-                        <td>
-                          <input type="number" class="form-control form-control-sm text-center" name="item__price[]" value="<?php echo $item['price'] ?>" min="0" step="0.01" required>
-                          <div class="invalid-feedback">
-                            กรุณากรอกข้อมูล!
-                          </div>
-                        </td>
-                        <td class="text-left">
-                          <textarea class="form-control form-control-sm" rows="3" name="item__text[]" required><?php echo $item['text'] ?></textarea>
-                          <div class="invalid-feedback">
-                            กรุณากรอกข้อมูล!
-                          </div>
+                          <?php echo $item['fullname'] ?>
                         </td>
                       </tr>
                     <?php endforeach; ?>
@@ -114,19 +120,7 @@ $inactive = (!empty($row['status']) && intval($row['status']) === 2 ? "checked" 
                         <button type="button" class="btn btn-sm btn-danger item-decrease">-</button>
                       </td>
                       <td class="text-left">
-                        <textarea class="form-control form-control-sm" rows="3" name="item_name[]"></textarea>
-                        <div class="invalid-feedback">
-                          กรุณากรอกข้อมูล!
-                        </div>
-                      </td>
-                      <td>
-                        <input type="number" class="form-control form-control-sm text-center" name="item_price[]" min="0" step="0.01">
-                        <div class="invalid-feedback">
-                          กรุณากรอกข้อมูล!
-                        </div>
-                      </td>
-                      <td class="text-left">
-                        <textarea class="form-control form-control-sm" rows="3" name="item_text[]"></textarea>
+                        <select class="form-control form-control-sm customer-select" name="customer_id" required></select>
                         <div class="invalid-feedback">
                           กรุณากรอกข้อมูล!
                         </div>
@@ -180,38 +174,6 @@ $inactive = (!empty($row['status']) && intval($row['status']) === 2 ? "checked" 
 
 <?php include_once(__DIR__ . "/../layout/footer.php"); ?>
 <script>
-  $(".date-input").on("keydown", function(e) {
-    e.prregistrationDefault();
-  });
-
-  $(".date-input").daterangepicker({
-    autoUpdateInput: false,
-    showDropdowns: true,
-    locale: {
-      "format": "DD/MM/YYYY",
-      "applyLabel": "ยืนยัน",
-      "cancelLabel": "ยกเลิก",
-      "daysOfWeek": [
-        "อา", "จ", "อ", "พ", "พฤ", "ศ", "ส"
-      ],
-      "monthNames": [
-        "มกราคม", "กุมภาพันธ์", "มีนาคม", "เมษายน", "พฤษภาคม", "มิถุนายน",
-        "กรกฎาคม", "สิงหาคม", "กันยายน", "ตุลาคม", "พฤศจิกายน", "ธันวาคม"
-      ]
-    },
-    "applyButtonClasses": "btn-success",
-    "cancelClass": "btn-danger"
-  });
-
-  $(".date-input").on("apply.daterangepicker", function(ev, picker) {
-    $(this).val(picker.startDate.format("DD/MM/YYYY") + " - " + picker.endDate.format("DD/MM/YYYY"));
-    $("input:checkbox").prop("disabled", false);
-  });
-
-  $(".date-input").on("cancel.daterangepicker", function(ev, picker) {
-    $(this).val("");
-  });
-
   $(".item-decrease").hide();
   $(document).on("click", ".item-increase", function() {
     $(".item-select").select2('destroy');
@@ -225,36 +187,143 @@ $inactive = (!empty($row['status']) && intval($row['status']) === 2 ? "checked" 
     });
     row.after(clone);
     clone.show();
+
+    $(".customer-select").select2({
+      placeholder: "-- CUSTOMER --",
+      allowClear: true,
+      width: "100%",
+      ajax: {
+        url: "/registration/customer-select",
+        method: "POST",
+        dataType: "json",
+        delay: 100,
+        processResults: function(data) {
+          return {
+            results: data
+          };
+        },
+        cache: true
+      }
+    });
   });
 
-  $(document).on("click", ".item-delete", function(e) {
-    let id = $(this).prop("id");
-    e.prregistrationDefault();
-    Swal.fire({
-      title: "ยืนยันที่จะทำรายการ?",
-      icon: "question",
-      showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
-      confirmButtonText: "ตกลง",
-      cancelButtonText: "ปิด",
-    }).then((result) => {
-      if (result.value) {
-        axios.post("/registration/item-delete", {
-          id: id,
-        }).then((res) => {
-          let result = res.data;
-          if (result === 200) {
-            location.reload()
-          } else {
-            location.reload()
-          }
-        }).catch((error) => {
-          console.log(error);
-        });
-      } else {
-        return false;
+  let event = ($(".event-select").val() ? $(".event-select").val() : "");
+  if (event) {
+    $(".package-div").show();
+    $(".package-select").select2({
+      placeholder: "-- PACKAGE --",
+      allowClear: true,
+      width: "100%",
+      ajax: {
+        url: "/registration/package-select",
+        method: "POST",
+        dataType: "json",
+        delay: 100,
+        data: function(params) {
+          return {
+            q: params.term,
+            event: event
+          };
+        },
+        processResults: function(data) {
+          return {
+            results: data
+          };
+        },
+        cache: true
       }
-    })
+    });
+  }
+
+  $(document).on("change", ".event-select", function() {
+    let event = ($(this).val() ? $(this).val() : "");
+    if (event) {
+      $(".package-div").show();
+      $(".package-select").select2({
+        placeholder: "-- PACKAGE --",
+        allowClear: true,
+        width: "100%",
+        ajax: {
+          url: "/registration/package-select",
+          method: "POST",
+          dataType: "json",
+          delay: 100,
+          data: function(params) {
+            return {
+              q: params.term,
+              event: event
+            };
+          },
+          processResults: function(data) {
+            return {
+              results: data
+            };
+          },
+          cache: true
+        }
+      });
+    } else {
+      $(".package-div").hide();
+    }
+  });
+
+  $(".event-select").select2({
+    placeholder: "-- EVENT --",
+    allowClear: true,
+    width: "100%",
+    ajax: {
+      url: "/registration/event-select",
+      method: "POST",
+      dataType: "json",
+      delay: 100,
+      processResults: function(data) {
+        return {
+          results: data
+        };
+      },
+      cache: true
+    }
+  });
+
+  $(".type-select").select2({
+    placeholder: "-- ประเภท --",
+    allowClear: true,
+    width: "100%",
+    ajax: {
+      url: "/registration/type-select",
+      method: "POST",
+      dataType: "json",
+      delay: 100,
+      processResults: function(data) {
+        return {
+          results: data
+        };
+      },
+      cache: true
+    }
+  });
+
+  $(".customer-select").select2({
+    placeholder: "-- CUSTOMER --",
+    allowClear: true,
+    width: "100%",
+    ajax: {
+      url: "/registration/customer-select",
+      method: "POST",
+      dataType: "json",
+      delay: 100,
+      processResults: function(data) {
+        return {
+          results: data
+        };
+      },
+      cache: true
+    }
+  });
+
+  $(document).on("click", ".item-qrcode", function() {
+    let id = $(this).prop("id");
+    path = "/registration/qrcode-item/" + id;
+    window.open(path);
   });
 </script>

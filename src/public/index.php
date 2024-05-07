@@ -30,6 +30,12 @@ $ROUTER->map("GET", "/registration/create", function () {
 $ROUTER->map("GET", "/registration/export", function () {
   require(__DIR__ . "/src/Views/registration/export.php");
 });
+$ROUTER->map("GET", "/registration/qrcode-item/[**:params]", function ($params) {
+  require(__DIR__ . "/src/Views/registration/qrcode-item.php");
+});
+$ROUTER->map("GET", "/registration/qrcode-report/[**:params]", function ($params) {
+  require(__DIR__ . "/src/Views/registration/qrcode-report.php");
+});
 $ROUTER->map("GET", "/registration/edit/[**:params]", function ($params) {
   require(__DIR__ . "/src/Views/registration/edit.php");
 });

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "6d9be13f6eeab22c9e4ae88ef196caea",
+    "content-hash": "701af8af20b1af42249d652a9ec53c93",
     "packages": [
         {
             "name": "altorouter/altorouter",
@@ -2030,9 +2030,6 @@
                 "reference": "e5643aaa89eb67327a5b4abe7db976f0ea276b70",
                 "shasum": ""
             },
-            "replace": {
-                "twitter/bootstrap": "self.version"
-            },
             "type": "library",
             "extra": {
                 "branch-alias": {
@@ -2080,5 +2077,5 @@
     "prefer-lowest": false,
     "platform": [],
     "platform-dev": [],
-    "plugin-api-version": "2.1.0"
+    "plugin-api-version": "2.2.0"
 }

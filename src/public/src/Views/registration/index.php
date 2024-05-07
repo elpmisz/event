@@ -12,6 +12,11 @@ include_once(__DIR__ . "/../layout/header.php");
       <div class="card-body">
         <div class="row justify-content-end mb-2">
           <div class="col-xl-3 mb-2">
+            <button class="btn btn-info btn-sm btn-block" data-toggle="modal" data-target="#import-modal">
+              <i class="fas fa-upload pr-2"></i>นำข้อมูลเข้า
+            </button>
+          </div>
+          <div class="col-xl-3 mb-2">
             <a href="/registration/export" class="btn btn-success btn-sm btn-block">
               <i class="fas fa-download pr-2"></i>นำข้อมูลออก
             </a>
@@ -30,10 +35,10 @@ include_once(__DIR__ . "/../layout/header.php");
                 <thead>
                   <tr>
                     <th width="10%">#</th>
-                    <th width="30%">ชื่อ</th>
-                    <th width="10%">วันที่</th>
-                    <th width="30%">หัวข้อ</th>
-                    <th width="20%">แพ็คเกจ</th>
+                    <th width="30%">EVENT</th>
+                    <th width="10%">ประเภทลูกค้า</th>
+                    <th width="30%">PACKAGE</th>
+                    <th width="10%">ราคา</th>
                   </tr>
                 </thead>
               </table>
@@ -46,27 +51,69 @@ include_once(__DIR__ . "/../layout/header.php");
   </div>
 </div>
 
+<div class="modal fade" id="import-modal" data-backdrop="static">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-body">
+        <form action="/registration/import" method="POST" class="needs-validation import" novalidate enctype="multipart/form-data">
+          <div class="row mb-2">
+            <label class="col-xl-4 col-form-label text-right">เอกสาร</label>
+            <div class="col-xl-8">
+              <input type="file" class="form-control form-control-sm" name="file" required>
+              <div class="invalid-feedback">
+                กรุณาเลือกเอกสาร!
+              </div>
+            </div>
+          </div>
+          <div class="row justify-content-center mb-2">
+            <div class="col-xl-4 mb-2">
+              <button type="submit" class="btn btn-success btn-sm btn-block btn-submit">
+                <i class="fas fa-check pr-2"></i>ยืนยัน
+              </button>
+            </div>
+            <div class="col-xl-4 mb-2">
+              <button class="btn btn-danger btn-sm btn-block" data-dismiss="modal">
+                <i class="fa fa-times mr-2"></i>ปิด
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="process-modal" data-backdrop="static">
+  <div class="modal-dialog modal-xl">
+    <div class="modal-content">
+      <div class="modal-body">
+        <h1 class="text-center"><span class="pr-5">Processing...</span><i class="fas fa-spinner fa-pulse"></i></h1>
+      </div>
+    </div>
+  </div>
+</div>
+
 
 <?php include_once(__DIR__ . "/../layout/footer.php"); ?>
 <script>
-  // filter_datatable();
+  filter_datatable();
 
-  // function filter_datatable() {
-  //   let datatable = $(".data").DataTable({
-  //     scrollX: true,
-  //     serverSide: true,
-  //     searching: true,
-  //     order: [],
-  //     ajax: {
-  //       url: "/registration/data",
-  //       type: "POST",
-  //     },
-  //     columnDefs: [{
-  //       targets: [0],
-  //       className: "text-center",
-  //     }]
-  //   });
-  // };
+  function filter_datatable() {
+    let datatable = $(".data").DataTable({
+      scrollX: true,
+      serverSide: true,
+      searching: true,
+      order: [],
+      ajax: {
+        url: "/registration/data",
+        type: "POST",
+      },
+      columnDefs: [{
+        targets: [0, 2, 4],
+        className: "text-center",
+      }]
+    });
+  };
 
   $(document).on("click", ".btn-delete", function(e) {
     let uuid = ($(this).prop("id") ? $(this).prop("id") : "");
@@ -98,5 +145,36 @@ include_once(__DIR__ . "/../layout/header.php");
         return false;
       }
     })
+  });
+
+  $("#import-modal").on("hidden.bs.modal", function() {
+    $(this).find("form")[0].reset();
+  })
+
+  $(document).on("change", "input[name='file']", function() {
+    let fileSize = ($(this)[0].files[0].size) / (1024 * 1024);
+    let fileExt = $(this).val().split(".").pop().toLowerCase();
+    let fileAllow = ["xls", "xlsx", "csv"];
+    let convFileSize = fileSize.toFixed(2);
+    if (convFileSize > 10) {
+      Swal.fire({
+        icon: "error",
+        title: "LIMIT 10MB!",
+      })
+      $(this).val("");
+    }
+
+    if ($.inArray(fileExt, fileAllow) == -1) {
+      Swal.fire({
+        icon: "error",
+        title: "เฉพาะไฟล์ XLS XLSX CSV!",
+      })
+      $(this).val("");
+    }
+  });
+
+  $(document).on("submit", ".import", function() {
+    $("#import-modal").modal("hide");
+    $("#process-modal").modal("show");
   });
 </script>

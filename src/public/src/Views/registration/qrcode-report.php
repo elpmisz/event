@@ -14,6 +14,10 @@ use App\Classes\Registration;
 $REGISTRATION = new Registration();
 $items = $REGISTRATION->item_view([$uuid]);
 
+$http = ($_SERVER['REQUEST_SCHEME'] ? $_SERVER['REQUEST_SCHEME'] : "");
+$host = ($_SERVER['HTTP_HOST'] ? $_SERVER['HTTP_HOST'] : "");
+$server = "{$http}://{$host}/registration";
+
 ob_start();
 ?>
 <!DOCTYPE html>
@@ -50,12 +54,12 @@ ob_start();
       <div class="card">
         <h4>TICKET</h4>
         <h6><?php echo $item['event_name'] ?></h6>
-        <barcode code="/registration/qrcode-item-detail/<?php echo $item['id'] ?>" type="QR" size="1.5" disableborder="1">
-          <h4>
+        <barcode code="<?php echo $server ?>/qrcode-item-detail/<?php echo $item['id'] ?>" type="QR" size="1.5" disableborder="1">
+          <h5>
             <?php echo $item['customer_name'] ?><br>
             <?php echo $item['type_name'] ?><br>
             <?php echo $item['country_name'] ?><br>
-          </h4>
+          </h5>
       </div>
     </div>
   <?php endforeach; ?>
@@ -66,6 +70,6 @@ ob_start();
 $html = ob_get_contents();
 ob_end_clean();
 
-$mpdf = new \Mpdf\Mpdf(['mode' => 'utf-8']);
+$mpdf = new \Mpdf\Mpdf(['mode' => 'utf-8', 'default_font' => 'garuda']);
 $mpdf->WriteHTML($html);
 $mpdf->Output("ticket.pdf", 'I');

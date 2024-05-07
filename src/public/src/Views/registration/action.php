@@ -6,6 +6,7 @@ error_reporting(E_ALL);
 date_default_timezone_set("Asia/Bangkok");
 include_once(__DIR__ . "/../../../vendor/autoload.php");
 
+use App\Classes\Customer;
 use App\Classes\Registration;
 use App\Classes\User;
 use App\Classes\Validation;
@@ -29,6 +30,7 @@ try {
 }
 
 $USER = new User();
+$CUSTOMER = new Customer();
 $REGISTRATION = new Registration();
 $VALIDATION = new Validation();
 
@@ -80,13 +82,41 @@ if ($action === "import") {
 
     foreach ($data as $key => $value) {
       if (!in_array($key, [0])) {
-        $name = (isset($value[0]) ? $value[0] : "");
-        $customer_id = $REGISTRATION->customer_id([$name]);
-        $type = (isset($value[1]) ? $value[1] : "");
+        $code = (isset($value[0]) ? $value[0] : "");
+        $customer = (isset($value[1]) ? $value[1] : "");
+        $customer_id = $REGISTRATION->customer_id([$customer]);
+        $country = (isset($value[2]) ? $value[2] : "");
+        $country_id = $REGISTRATION->country_id([$country]);
+        $email = (isset($value[3]) ? $value[3] : "");
+        $company = (isset($value[4]) ? $value[4] : "");
+        $type = (isset($value[5]) ? $value[5] : "");
         $type_id = $REGISTRATION->type_id([$type]);
-        $event = (isset($value[2]) ? $value[2] : "");
+        $event = (isset($value[6]) ? $value[6] : "");
         $event_id = $REGISTRATION->event_id([$event]);
-        $package = (isset($value[3]) ? $value[3] : "");
+        $package = (isset($value[7]) ? $value[7] : "");
+        $package_id = $REGISTRATION->package_id([$event_id, $package]);
+
+        $count = $CUSTOMER->customer_count([$customer, $email, $company, $country_id]);
+        if (intval($count) === 0) {
+          $CUSTOMER->customer_insert([$customer, $email, $company, $country_id]);
+        }
+      }
+    }
+
+    foreach ($data as $key => $value) {
+      if (!in_array($key, [0])) {
+        $code = (isset($value[0]) ? $value[0] : "");
+        $customer = (isset($value[1]) ? $value[1] : "");
+        $customer_id = $REGISTRATION->customer_id([$customer]);
+        $country = (isset($value[2]) ? $value[2] : "");
+        $country_id = $REGISTRATION->country_id([$country]);
+        $email = (isset($value[3]) ? $value[3] : "");
+        $company = (isset($value[4]) ? $value[4] : "");
+        $type = (isset($value[5]) ? $value[5] : "");
+        $type_id = $REGISTRATION->type_id([$type]);
+        $event = (isset($value[6]) ? $value[6] : "");
+        $event_id = $REGISTRATION->event_id([$event]);
+        $package = (isset($value[7]) ? $value[7] : "");
         $package_id = $REGISTRATION->package_id([$event_id, $package]);
 
         $count = $REGISTRATION->registration_count([$event_id, $package_id, $type_id]);
@@ -98,19 +128,24 @@ if ($action === "import") {
 
     foreach ($data as $key => $value) {
       if (!in_array($key, [0])) {
-        $name = (isset($value[0]) ? $value[0] : "");
-        $customer_id = $REGISTRATION->customer_id([$name]);
-        $type = (isset($value[1]) ? $value[1] : "");
+        $code = (isset($value[0]) ? $value[0] : "");
+        $customer = (isset($value[1]) ? $value[1] : "");
+        $customer_id = $REGISTRATION->customer_id([$customer]);
+        $country = (isset($value[2]) ? $value[2] : "");
+        $country_id = $REGISTRATION->country_id([$country]);
+        $email = (isset($value[3]) ? $value[3] : "");
+        $company = (isset($value[4]) ? $value[4] : "");
+        $type = (isset($value[5]) ? $value[5] : "");
         $type_id = $REGISTRATION->type_id([$type]);
-        $event = (isset($value[2]) ? $value[2] : "");
+        $event = (isset($value[6]) ? $value[6] : "");
         $event_id = $REGISTRATION->event_id([$event]);
-        $package = (isset($value[3]) ? $value[3] : "");
+        $package = (isset($value[7]) ? $value[7] : "");
         $package_id = $REGISTRATION->package_id([$event_id, $package]);
         $registration_id = $REGISTRATION->registration_id([$event_id, $package_id, $type_id]);
 
-        $count = $REGISTRATION->item_count([$registration_id, $customer_id]);
+        $count = $REGISTRATION->item_count([$registration_id, $code, $customer_id]);
         if (intval($count) === 0) {
-          $REGISTRATION->item_insert([$registration_id, $customer_id]);
+          $REGISTRATION->item_insert([$registration_id, $code, $customer_id]);
         }
       }
     }

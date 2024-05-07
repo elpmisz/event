@@ -14,9 +14,9 @@ use App\Classes\Registration;
 $REGISTRATION = new Registration();
 $row = $REGISTRATION->item_detail([$id]);
 
-// echo "<pre>";
-// print_r($row);
-// echo "</pre>";
+$http = ($_SERVER['REQUEST_SCHEME'] ? $_SERVER['REQUEST_SCHEME'] : "");
+$host = ($_SERVER['HTTP_HOST'] ? $_SERVER['HTTP_HOST'] : "");
+$server = "{$http}://{$host}/registration";
 
 ob_start();
 ?>
@@ -45,7 +45,7 @@ ob_start();
   <div class="card">
     <h4>TICKET</h4>
     <h5><?php echo $row['event_name'] ?></h5>
-    <barcode code="/registration/qrcode-item-detail/<?php echo $row['id'] ?>" type="QR" size="1.5" disableborder="1">
+    <barcode code="<?php echo $server ?>/qrcode-item-detail/<?php echo $row['id'] ?>" type="QR" size="1.5" disableborder="1">
       <h4>
         <?php echo $row['customer_name'] ?><br>
         <?php echo $row['type_name'] ?><br>
@@ -59,7 +59,7 @@ ob_start();
 $html = ob_get_contents();
 ob_end_clean();
 
-$mpdf = new \Mpdf\Mpdf(['mode' => 'utf-8']);
+$mpdf = new \Mpdf\Mpdf(['mode' => 'utf-8', 'default_font' => 'garuda']);
 $mpdf->WriteHTML($html);
 $date = date('Ymd');
 $mpdf->Output("ticket.pdf", 'I');

@@ -200,7 +200,7 @@ class Event
         $status,
         $row['name'],
         str_replace("-", "-<br>", $row['date']),
-        str_replace("\n", "<br>", $row['topic']),
+        str_replace("\n", "<br>", html_entity_decode($row['topic'])),
         str_replace(",", "<br>", $row['item']),
       ];
     }

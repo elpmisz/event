@@ -67,7 +67,7 @@ class Registration
 
   public function item_count($data)
   {
-    $sql = "SELECT COUNT(*) FROM event.registration_item WHERE registration_id = ? AND customer_id = ?";
+    $sql = "SELECT COUNT(*) FROM event.registration_item WHERE registration_id = ? AND code = ? AND customer_id = ?";
     $stmt = $this->dbcon->prepare($sql);
     $stmt->execute($data);
     return $stmt->fetchColumn();
@@ -75,7 +75,7 @@ class Registration
 
   public function item_insert($data)
   {
-    $sql = "INSERT INTO event.registration_item(`registration_id`, `customer_id`) VALUES (?,?)";
+    $sql = "INSERT INTO event.registration_item(`registration_id`, `code`, `customer_id`) VALUES (?,?,?)";
     $stmt = $this->dbcon->prepare($sql);
     return $stmt->execute($data);
   }
@@ -107,7 +107,9 @@ class Registration
 
   public function item_detail($data)
   {
-    $sql = "SELECT b.id,c.`name` event_name,f.`name` customer_name,g.name_en country_name,
+    $sql = "SELECT b.id,b.code,c.`name` event_name,c.topic,c.date,
+    f.`name` customer_name,f.email,f.company,
+    g.name_en country_name,
     d.`name` package_name,d.price,d.text,
     e.`name` type_name
     FROM event.registration_request a
@@ -146,6 +148,16 @@ class Registration
     $row = $stmt->fetch();
     return (!empty($row['id']) ? $row['id'] : "");
   }
+
+  public function country_id($data)
+  {
+    $sql = "SELECT id FROM event.country WHERE name_en = ?";
+    $stmt = $this->dbcon->prepare($sql);
+    $stmt->execute($data);
+    $row = $stmt->fetch();
+    return (!empty($row['id']) ? $row['id'] : "");
+  }
+
 
   public function event_id($data)
   {
@@ -296,7 +308,7 @@ class Registration
 
     $data = [];
     foreach ($result as $row) {
-      $status = "<a href='/registration/qrcode-report/{$row['uuid']}' class='badge badge-info font-weight-light'>QR Code</a> <a href='/registration/edit/{$row['uuid']}' class='badge badge-{$row['status_color']} font-weight-light'>{$row['status_name']}</a> <a href='javascript:void(0)' class='badge badge-danger font-weight-light btn-delete' id='{$row['uuid']}'>ลบ</a>";
+      $status = "<a href='/registration/qrcode-report/{$row['uuid']}' class='badge badge-info font-weight-light' target='_blank'>QR Code</a> <a href='/registration/edit/{$row['uuid']}' class='badge badge-{$row['status_color']} font-weight-light'>{$row['status_name']}</a> <a href='javascript:void(0)' class='badge badge-danger font-weight-light btn-delete' id='{$row['uuid']}'>ลบ</a>";
       $data[] = [
         $status,
         $row['event_name'],

@@ -33,6 +33,9 @@ $ROUTER->map("GET", "/registration/export", function () {
 $ROUTER->map("GET", "/registration/qrcode-item/[**:params]", function ($params) {
   require(__DIR__ . "/src/Views/registration/qrcode-item.php");
 });
+$ROUTER->map("GET", "/registration/qrcode-item-detail/[**:params]", function ($params) {
+  require(__DIR__ . "/src/Views/registration/qrcode-item-detail.php");
+});
 $ROUTER->map("GET", "/registration/qrcode-report/[**:params]", function ($params) {
   require(__DIR__ . "/src/Views/registration/qrcode-report.php");
 });

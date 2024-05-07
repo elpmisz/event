@@ -21,7 +21,7 @@ class Customer
 
   public function customer_count($data)
   {
-    $sql = "SELECT COUNT(*) FROM event.customer WHERE name = ?";
+    $sql = "SELECT COUNT(*) FROM event.customer WHERE name = ? AND email = ? AND company = ? AND country = ?";
     $stmt = $this->dbcon->prepare($sql);
     $stmt->execute($data);
     return $stmt->fetchColumn();
@@ -38,7 +38,7 @@ class Customer
 
   public function customer_insert($data)
   {
-    $sql = "INSERT INTO event.customer(`uuid`, `name`, `email`, `country`) VALUES (uuid(),?,?,?)";
+    $sql = "INSERT INTO event.customer(`uuid`, `name`, `email`, `company`, `country`) VALUES (uuid(),?,?,?,?)";
     $stmt = $this->dbcon->prepare($sql);
     return $stmt->execute($data);
   }

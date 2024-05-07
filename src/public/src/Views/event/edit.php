@@ -14,7 +14,7 @@ $items = $EVENT->item_view([$uuid]);
 $id = (!empty($row['id']) ? $row['id'] : "");
 $uuid = (!empty($row['uuid']) ? $row['uuid'] : "");
 $name = (!empty($row['name']) ? $row['name'] : "");
-$topic = (!empty($row['topic']) ? $row['topic'] : "");
+$topic = (!empty($row['topic']) ? html_entity_decode($row['topic']) : "");
 $date = (!empty($row['date']) ? $row['date'] : "");
 $active = (!empty($row['status']) && intval($row['status']) === 1 ? "checked" : "");
 $inactive = (!empty($row['status']) && intval($row['status']) === 2 ? "checked" : "");

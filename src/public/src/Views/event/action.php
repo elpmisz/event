@@ -105,7 +105,7 @@ if ($action === "edit") {
       $item_text = (isset($_POST['item_text'][$key]) ? $VALIDATION->input($_POST['item_text'][$key]) : "");
 
       if (!empty($item_name)) {
-        $EVENT->item_insert([$event_id, $item_name, $item_price, $item_text]);
+        $EVENT->item_insert([$id, $item_name, $item_price, $item_text]);
       }
     }
     $VALIDATION->alert("success", "ดำเนินการเรียบร้อย!", "/event/edit/{$uuid}");

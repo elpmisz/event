@@ -6,12 +6,12 @@ error_reporting(E_ALL);
 date_default_timezone_set("Asia/Bangkok");
 include_once(__DIR__ . "/../../../vendor/autoload.php");
 
-use App\Classes\registration;
+use App\Classes\Registration;
 use App\Classes\Validation;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
-$registration = new registration();
+$REGISTRATION = new Registration();
 $VALIDATION = new Validation();
 $SPREADSHEET = new Spreadsheet();
 $WRITER = new Xlsx($SPREADSHEET);
@@ -34,8 +34,8 @@ $STYLEHEADER = [
   ]
 ];
 
-$data = $registration->registration_export();
-$columns = ["NAME", "TOPIC", "DATE", "PACKAGE", "PRICE", "TEXT", "STATUS", "CREATED"];
+$data = $REGISTRATION->registration_export();
+$columns = ["CODE", "NAME",  "COUNTRY",  "EMAIL",  "COMPANY",  "TYPE",  "EVENT",  "PACKAGE"];
 
 ob_start();
 $date = date('Y-m-d');

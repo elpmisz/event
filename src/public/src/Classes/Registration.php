@@ -131,6 +131,30 @@ class Registration
     return $stmt->fetch();
   }
 
+  public function registration_export()
+  {
+    $sql = "SELECT a.`code`,c.`name` customer_name,d.name_en country_name,c.email customer_email,
+    c.company customer_company,e.`name` type_name,f.`name` event_name,g.`name` package_name
+    FROM event.registration_item a
+    LEFT JOIN event.registration_request b
+    ON a.registration_id = b.id
+    LEFT JOIN event.customer c
+    ON a.customer_id = c.id
+    LEFT JOIN event.country d
+    ON c.country = d.id
+    LEFT JOIN event.customer_type e
+    ON b.`type` = e.id
+    LEFT JOIN event.event_request f
+    ON b.`event` = f.id
+    LEFT JOIN event.event_item g
+    ON b.package = g.id
+    WHERE a.`status` = 1
+    ORDER BY e.id ASC,g.id ASC,a.`code` ASC";
+    $stmt = $this->dbcon->prepare($sql);
+    $stmt->execute();
+    return $stmt->fetchAll(PDO::FETCH_NUM);
+  }
+
   public function registration_id($data)
   {
     $sql = "SELECT id FROM event.registration_request WHERE event = ? AND package = ? AND type = ?";

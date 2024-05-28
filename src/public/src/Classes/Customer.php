@@ -21,7 +21,7 @@ class Customer
 
   public function customer_count($data)
   {
-    $sql = "SELECT COUNT(*) FROM event.customer WHERE name = ? AND email = ? AND company = ? AND country = ?";
+    $sql = "SELECT COUNT(*) FROM event.customer WHERE name = ? AND country = ?";
     $stmt = $this->dbcon->prepare($sql);
     $stmt->execute($data);
     return $stmt->fetchColumn();
@@ -45,7 +45,7 @@ class Customer
 
   public function customer_view($data)
   {
-    $sql = "SELECT a.id,a.`uuid`,a.`name`,a.email,a.country,CONCAT(b.name_th,' [',b.name_en,']') country_name,a.status
+    $sql = "SELECT a.id,a.`uuid`,a.`name`,a.email,a.company,a.country,CONCAT(b.name_th,' [',b.name_en,']') country_name,a.status
     FROM event.customer a
     LEFT JOIN event.country b
     ON a.country = b.id
@@ -60,6 +60,7 @@ class Customer
     $sql = "UPDATE event.customer SET
     name = ?,
     email = ?,
+    company = ?,
     country = ?,
     status = ?,
     updated = NOW()
@@ -80,7 +81,7 @@ class Customer
 
   public function customer_export()
   {
-    $sql = "SELECT a.`name`,a.email,CONCAT(b.name_th,' [',b.name_en,']') country_name,
+    $sql = "SELECT a.`name`,a.email, a.company,CONCAT(b.name_th,' [',b.name_en,']') country_name,
     (
       CASE
         WHEN a.status = 1 THEN 'ใช้งาน'

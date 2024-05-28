@@ -13,7 +13,7 @@ include_once(__DIR__ . "/../layout/header.php");
       <div class="card-body">
         <form action="/customer/create" method="POST" class="needs-validation" novalidate enctype="multipart/form-data">
           <div class="row mb-2">
-            <label class="col-xl-2 offset-xl-2 col-form-label">รายชื่อ</label>
+            <label class="col-xl-2 offset-xl-2 col-form-label">ชื่อ</label>
             <div class="col-xl-4">
               <input type="text" class="form-control form-control-sm" name="name" required>
               <div class="invalid-feedback">
@@ -25,6 +25,15 @@ include_once(__DIR__ . "/../layout/header.php");
             <label class="col-xl-2 offset-xl-2 col-form-label">อีเมล</label>
             <div class="col-xl-4">
               <input type="email" class="form-control form-control-sm" name="email" required>
+              <div class="invalid-feedback">
+                กรุณากรอกข้อมูล!
+              </div>
+            </div>
+          </div>
+          <div class="row mb-2">
+            <label class="col-xl-2 offset-xl-2 col-form-label">บริษัท</label>
+            <div class="col-xl-6">
+              <input type="text" class="form-control form-control-sm" name="company">
               <div class="invalid-feedback">
                 กรุณากรอกข้อมูล!
               </div>

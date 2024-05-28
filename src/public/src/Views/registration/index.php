@@ -27,6 +27,20 @@ include_once(__DIR__ . "/../layout/header.php");
             </a>
           </div>
         </div>
+        <div class="row justify-content-end mb-2">
+          <div class="col-xl-3 mb-2">
+            <select class="form-control form-control-sm type-select"></select>
+          </div>
+          <div class="col-xl-3 mb-2">
+            <select class="form-control form-control-sm country-select"></select>
+          </div>
+          <div class="col-xl-3 mb-2">
+            <select class="form-control form-control-sm event-select"></select>
+          </div>
+          <div class="col-xl-3 mb-2">
+            <select class="form-control form-control-sm package-select"></select>
+          </div>
+        </div>
 
         <div class="row mb-2">
           <div class="col-xl-12">
@@ -35,10 +49,12 @@ include_once(__DIR__ . "/../layout/header.php");
                 <thead>
                   <tr>
                     <th width="10%">#</th>
+                    <th width="10%">CODE</th>
+                    <th width="10%">CUSTOMER</th>
+                    <th width="10%">TYPE</th>
+                    <th width="10%">COUNTRY</th>
                     <th width="30%">EVENT</th>
-                    <th width="10%">ประเภทลูกค้า</th>
-                    <th width="30%">PACKAGE</th>
-                    <th width="10%">ราคา</th>
+                    <th width="10%">PACKAGE</th>
                   </tr>
                 </thead>
               </table>
@@ -98,7 +114,20 @@ include_once(__DIR__ . "/../layout/header.php");
 <script>
   filter_datatable();
 
-  function filter_datatable() {
+  $(document).on("change", ".type-select, .country-select, .package-select", function() {
+    let type = ($(".type-select").val() ? $(".type-select").val() : "");
+    let country = ($(".country-select").val() ? $(".country-select").val() : "");
+    let package = ($(".package-select").val() ? $(".package-select").val() : "");
+    if (type || country || package) {
+      $(".data").DataTable().destroy();
+      filter_datatable(type, country, package);
+    } else {
+      $(".data").DataTable().destroy();
+      filter_datatable();
+    }
+  });
+
+  function filter_datatable(type, country, package) {
     let datatable = $(".data").DataTable({
       scrollX: true,
       serverSide: true,
@@ -107,9 +136,14 @@ include_once(__DIR__ . "/../layout/header.php");
       ajax: {
         url: "/registration/data",
         type: "POST",
+        data: {
+          type: type,
+          country: country,
+          package: package
+        }
       },
       columnDefs: [{
-        targets: [0, 2, 4],
+        targets: [0, 1, 6],
         className: "text-center",
       }]
     });
@@ -176,5 +210,91 @@ include_once(__DIR__ . "/../layout/header.php");
   $(document).on("submit", ".import", function() {
     $("#import-modal").modal("hide");
     $("#process-modal").modal("show");
+  });
+
+  $(".type-select").select2({
+    placeholder: "-- ประเภท --",
+    allowClear: true,
+    width: "100%",
+    ajax: {
+      url: "/registration/type-select",
+      method: "POST",
+      dataType: "json",
+      delay: 100,
+      processResults: function(data) {
+        return {
+          results: data
+        };
+      },
+      cache: true
+    }
+  });
+
+  $(".country-select").select2({
+    placeholder: "-- ประเทศ --",
+    allowClear: true,
+    width: "100%",
+    ajax: {
+      url: "/customer/country-select",
+      method: "POST",
+      dataType: "json",
+      delay: 100,
+      processResults: function(data) {
+        return {
+          results: data
+        };
+      },
+      cache: true
+    }
+  });
+
+  $(".event-select").select2({
+    placeholder: "-- EVENT --",
+    allowClear: true,
+    width: "100%",
+    ajax: {
+      url: "/registration/event-select",
+      method: "POST",
+      dataType: "json",
+      delay: 100,
+      processResults: function(data) {
+        return {
+          results: data
+        };
+      },
+      cache: true
+    }
+  });
+
+  $(document).on("change", ".event-select", function() {
+    let event = ($(this).val() ? $(this).val() : "");
+    if (event) {
+      $(".package-div").show();
+      $(".package-select").select2({
+        placeholder: "-- PACKAGE --",
+        allowClear: true,
+        width: "100%",
+        ajax: {
+          url: "/registration/package-select",
+          method: "POST",
+          dataType: "json",
+          delay: 100,
+          data: function(params) {
+            return {
+              q: params.term,
+              event: event
+            };
+          },
+          processResults: function(data) {
+            return {
+              results: data
+            };
+          },
+          cache: true
+        }
+      });
+    } else {
+      $(".package-div").hide();
+    }
   });
 </script>

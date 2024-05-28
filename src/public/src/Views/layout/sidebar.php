@@ -80,12 +80,6 @@ $setting_country = ($page === "setting-country" ? 'class="active"' : "");
               ข้อมูลลูกค้า
             </a>
           </li>
-          <li <?php echo $setting_customer_type ?>>
-            <a href="/customer-type">
-              <i class="fa fa-user-cog pr-2"></i>
-              ข้อมูลประเภทลูกค้า
-            </a>
-          </li>
           <li <?php echo $setting_country ?>>
             <a href="/country">
               <i class="fa fa-globe pr-2"></i>

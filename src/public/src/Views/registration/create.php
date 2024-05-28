@@ -13,6 +13,60 @@ include_once(__DIR__ . "/../layout/header.php");
       <div class="card-body">
         <form action="/registration/create" method="POST" class="needs-validation" novalidate enctype="multipart/form-data">
           <div class="row mb-2">
+            <label class="col-xl-2 offset-xl-2 col-form-label">CODE</label>
+            <div class="col-xl-4">
+              <input type="text" class="form-control form-control-sm" name="code" required>
+              <div class="invalid-feedback">
+                กรุณากรอกข้อมูล!
+              </div>
+            </div>
+          </div>
+          <div class="row mb-2">
+            <label class="col-xl-2 offset-xl-2 col-form-label">CUSTOMER</label>
+            <div class="col-xl-4">
+              <input type="text" class="form-control form-control-sm" name="name" required>
+              <div class="invalid-feedback">
+                กรุณากรอกข้อมูล!
+              </div>
+            </div>
+          </div>
+          <div class="row mb-2">
+            <label class="col-xl-2 offset-xl-2 col-form-label">E-Mail</label>
+            <div class="col-xl-4">
+              <input type="email" class="form-control form-control-sm" name="email">
+              <div class="invalid-feedback">
+                กรุณากรอกข้อมูล!
+              </div>
+            </div>
+          </div>
+          <div class="row mb-2">
+            <label class="col-xl-2 offset-xl-2 col-form-label">COMPANY</label>
+            <div class="col-xl-6">
+              <input type="text" class="form-control form-control-sm" name="company">
+              <div class="invalid-feedback">
+                กรุณากรอกข้อมูล!
+              </div>
+            </div>
+          </div>
+          <div class="row mb-2">
+            <label class="col-xl-2 offset-xl-2 col-form-label">TYPE</label>
+            <div class="col-xl-4">
+              <select class="form-control form-control-sm type-select" name="type" required></select>
+              <div class="invalid-feedback">
+                กรุณากรอกข้อมูล!
+              </div>
+            </div>
+          </div>
+          <div class="row mb-2">
+            <label class="col-xl-2 offset-xl-2 col-form-label">COUNTRY</label>
+            <div class="col-xl-4">
+              <select class="form-control form-control-sm country-select" name="country" required></select>
+              <div class="invalid-feedback">
+                กรุณากรอกข้อมูล!
+              </div>
+            </div>
+          </div>
+          <div class="row mb-2">
             <label class="col-xl-2 offset-xl-2 col-form-label">EVENT</label>
             <div class="col-xl-4">
               <select class="form-control form-control-sm event-select" name="event_id" required></select>
@@ -27,44 +81,6 @@ include_once(__DIR__ . "/../layout/header.php");
               <select class="form-control form-control-sm package-select" name="package_id" required></select>
               <div class="invalid-feedback">
                 กรุณากรอกข้อมูล!
-              </div>
-            </div>
-          </div>
-          <div class="row mb-2">
-            <label class="col-xl-2 offset-xl-2 col-form-label">ประเภทลูกค้า</label>
-            <div class="col-xl-4">
-              <select class="form-control form-control-sm type-select" name="type_id" required></select>
-              <div class="invalid-feedback">
-                กรุณากรอกข้อมูล!
-              </div>
-            </div>
-          </div>
-
-          <div class="row justify-content-center mb-2">
-            <div class="col-sm-10">
-              <div class="table-responsive">
-                <table class="table table-bordered table-sm item-table">
-                  <thead>
-                    <tr>
-                      <th width="10%">#</th>
-                      <th width="80%">ลูกค้า</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr class="item-tr">
-                      <td class="text-center">
-                        <button type="button" class="btn btn-sm btn-success item-increase">+</button>
-                        <button type="button" class="btn btn-sm btn-danger item-decrease">-</button>
-                      </td>
-                      <td class="text-left">
-                        <select class="form-control form-control-sm customer-select" name="customer_id" required></select>
-                        <div class="invalid-feedback">
-                          กรุณากรอกข้อมูล!
-                        </div>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
               </div>
             </div>
           </div>
@@ -91,37 +107,40 @@ include_once(__DIR__ . "/../layout/header.php");
 
 <?php include_once(__DIR__ . "/../layout/footer.php"); ?>
 <script>
-  $(".item-decrease").hide();
-  $(document).on("click", ".item-increase", function() {
-    $(".item-select").select2('destroy');
-    let row = $(".item-tr:last");
-    let clone = row.clone();
-    clone.find("input, select, textarea, span").val("").empty();
-    clone.find(".item-increase").hide();
-    clone.find(".item-decrease").show();
-    clone.find(".item-decrease").on("click", function() {
-      $(this).closest("tr").remove();
-    });
-    row.after(clone);
-    clone.show();
+  $(".type-select").select2({
+    placeholder: "-- ประเภท --",
+    allowClear: true,
+    width: "100%",
+    ajax: {
+      url: "/registration/type-select",
+      method: "POST",
+      dataType: "json",
+      delay: 100,
+      processResults: function(data) {
+        return {
+          results: data
+        };
+      },
+      cache: true
+    }
+  });
 
-    $(".customer-select").select2({
-      placeholder: "-- CUSTOMER --",
-      allowClear: true,
-      width: "100%",
-      ajax: {
-        url: "/registration/customer-select",
-        method: "POST",
-        dataType: "json",
-        delay: 100,
-        processResults: function(data) {
-          return {
-            results: data
-          };
-        },
-        cache: true
-      }
-    });
+  $(".country-select").select2({
+    placeholder: "-- ประเทศ --",
+    allowClear: true,
+    width: "100%",
+    ajax: {
+      url: "/customer/country-select",
+      method: "POST",
+      dataType: "json",
+      delay: 100,
+      processResults: function(data) {
+        return {
+          results: data
+        };
+      },
+      cache: true
+    }
   });
 
   $(".package-div").hide();
@@ -163,42 +182,6 @@ include_once(__DIR__ . "/../layout/header.php");
     width: "100%",
     ajax: {
       url: "/registration/event-select",
-      method: "POST",
-      dataType: "json",
-      delay: 100,
-      processResults: function(data) {
-        return {
-          results: data
-        };
-      },
-      cache: true
-    }
-  });
-
-  $(".type-select").select2({
-    placeholder: "-- ประเภท --",
-    allowClear: true,
-    width: "100%",
-    ajax: {
-      url: "/registration/type-select",
-      method: "POST",
-      dataType: "json",
-      delay: 100,
-      processResults: function(data) {
-        return {
-          results: data
-        };
-      },
-      cache: true
-    }
-  });
-
-  $(".customer-select").select2({
-    placeholder: "-- CUSTOMER --",
-    allowClear: true,
-    width: "100%",
-    ajax: {
-      url: "/registration/customer-select",
       method: "POST",
       dataType: "json",
       delay: 100,

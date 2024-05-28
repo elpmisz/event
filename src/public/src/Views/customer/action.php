@@ -43,6 +43,7 @@ if ($action === "create") {
   try {
     $name = (isset($_POST['name']) ? $VALIDATION->input($_POST['name']) : "");
     $email = (isset($_POST['email']) ? $VALIDATION->input($_POST['email']) : "");
+    $company = (isset($_POST['company']) ? $VALIDATION->input($_POST['company']) : "");
     $country = (isset($_POST['country']) ? $VALIDATION->input($_POST['country']) : "");
 
     $count = $CUSTOMER->customer_count([$name]);
@@ -50,7 +51,7 @@ if ($action === "create") {
       $VALIDATION->alert("danger", "ข้อมูลซ้ำในระบบ!", "/customer");
     }
 
-    $CUSTOMER->customer_insert([$name, $email, $country]);
+    $CUSTOMER->customer_insert([$name, $email, $company, $country]);
     $VALIDATION->alert("success", "ดำเนินการเรียบร้อย!", "/customer");
   } catch (PDOException $e) {
     die($e->getMessage());
@@ -63,10 +64,11 @@ if ($action === "edit") {
     $uuid = (isset($_POST['uuid']) ? $VALIDATION->input($_POST['uuid']) : "");
     $name = (isset($_POST['name']) ? $VALIDATION->input($_POST['name']) : "");
     $email = (isset($_POST['email']) ? $VALIDATION->input($_POST['email']) : "");
+    $company = (isset($_POST['company']) ? $VALIDATION->input($_POST['company']) : "");
     $country = (isset($_POST['country']) ? $VALIDATION->input($_POST['country']) : "");
     $status = (isset($_POST['status']) ? $VALIDATION->input($_POST['status']) : "");
 
-    $CUSTOMER->customer_update([$name, $email, $country, $status, $uuid]);
+    $CUSTOMER->customer_update([$name, $email, $company, $country, $status, $uuid]);
     $VALIDATION->alert("success", "ดำเนินการเรียบร้อย!", "/customer");
   } catch (PDOException $e) {
     die($e->getMessage());
@@ -124,13 +126,15 @@ if ($action === "import") {
     foreach ($data as $key => $value) {
       if (!in_array($key, [0])) {
         $name = (isset($value[0]) ? $value[0] : "");
-        $country = (isset($value[1]) ? $value[1] : "");
+        $email = (isset($value[1]) ? $value[1] : "");
+        $company = (isset($value[2]) ? $value[2] : "");
+        $country = (isset($value[3]) ? $value[3] : "");
         $country_id = $CUSTOMER->country_id([$country]);
-        $email = (isset($value[2]) ? $value[2] : "");
+
 
         $count = $CUSTOMER->customer_count([$name]);
         if (intval($count) === 0) {
-          $CUSTOMER->customer_insert([$name, $email, $country_id]);
+          $CUSTOMER->customer_insert([$name, $email, $company, $country_id]);
         }
       }
     }

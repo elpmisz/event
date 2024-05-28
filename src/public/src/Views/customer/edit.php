@@ -14,6 +14,7 @@ $id = (!empty($row['id']) ? $row['id'] : "");
 $uuid = (!empty($row['uuid']) ? $row['uuid'] : "");
 $name = (!empty($row['name']) ? $row['name'] : "");
 $email = (!empty($row['email']) ? $row['email'] : "");
+$company = (!empty($row['company']) ? $row['company'] : "");
 $country = (!empty($row['country']) ? $row['country'] : "");
 $country_name = (!empty($row['country_name']) ? $row['country_name'] : "");
 $active = (!empty($row['status']) && intval($row['status']) === 1 ? "checked" : "");
@@ -54,6 +55,15 @@ $inactive = (!empty($row['status']) && intval($row['status']) === 2 ? "checked" 
             <label class="col-xl-2 offset-xl-2 col-form-label">อีเมล</label>
             <div class="col-xl-4">
               <input type="email" class="form-control form-control-sm" name="email" value="<?php echo $email ?>" required>
+              <div class="invalid-feedback">
+                กรุณากรอกข้อมูล!
+              </div>
+            </div>
+          </div>
+          <div class="row mb-2">
+            <label class="col-xl-2 offset-xl-2 col-form-label">บริษัท</label>
+            <div class="col-xl-6">
+              <input type="text" class="form-control form-control-sm" name="company" value="<?php echo $company ?>">
               <div class="invalid-feedback">
                 กรุณากรอกข้อมูล!
               </div>

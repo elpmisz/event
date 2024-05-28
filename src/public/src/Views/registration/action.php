@@ -43,8 +43,52 @@ $param2 = (isset($param[2]) ? $param[2] : "");
 
 if ($action === "create") {
   try {
-    echo "<pre>";
-    print_r($_POST);
+    $code = (isset($_POST['code']) ? $VALIDATION->input($_POST['code']) : "");
+    $name = (isset($_POST['name']) ? $VALIDATION->input($_POST['name']) : "");
+    $email = (isset($_POST['email']) ? $VALIDATION->input($_POST['email']) : "");
+    $company = (isset($_POST['company']) ? $VALIDATION->input($_POST['company']) : "");
+    $type = (isset($_POST['type']) ? $VALIDATION->input($_POST['type']) : "");
+    $country = (isset($_POST['country']) ? $VALIDATION->input($_POST['country']) : "");
+    $event_id = (isset($_POST['event_id']) ? $VALIDATION->input($_POST['event_id']) : "");
+    $package_id = (isset($_POST['package_id']) ? $VALIDATION->input($_POST['package_id']) : "");
+
+    $count = $CUSTOMER->customer_count([$name, $country]);
+    if (intval($count) === 0 && !empty($code) && !empty($name)) {
+      $CUSTOMER->customer_insert([$name, $email, $company, $country]);
+    }
+    $customer_id = $REGISTRATION->customer_id([$name]);
+
+    $count = $REGISTRATION->registration_count([$code, $name, $type, $event_id, $package_id]);
+    if (intval($count) === 0 && !empty($code) && !empty($name)) {
+      $REGISTRATION->registration_insert([$code, $customer_id, $type, $event_id, $package_id]);
+    }
+
+    $VALIDATION->alert("success", "ดำเนินการเรียบร้อย!", "/registration");
+  } catch (PDOException $e) {
+    die($e->getMessage());
+  }
+}
+
+if ($action === "edit") {
+  try {
+    $id = (isset($_POST['id']) ? $VALIDATION->input($_POST['id']) : "");
+    $uuid = (isset($_POST['uuid']) ? $VALIDATION->input($_POST['uuid']) : "");
+    $code = (isset($_POST['code']) ? $VALIDATION->input($_POST['code']) : "");
+    $user = (isset($_POST['user']) ? $VALIDATION->input($_POST['user']) : "");
+    $event = (isset($_POST['event']) ? $VALIDATION->input($_POST['event']) : "");
+    $name = (isset($_POST['name']) ? $VALIDATION->input($_POST['name']) : "");
+    $email = (isset($_POST['email']) ? $VALIDATION->input($_POST['email']) : "");
+    $company = (isset($_POST['company']) ? $VALIDATION->input($_POST['company']) : "");
+    $type = (isset($_POST['type']) ? $VALIDATION->input($_POST['type']) : "");
+    $country = (isset($_POST['country']) ? $VALIDATION->input($_POST['country']) : "");
+    $event_id = (isset($_POST['event_id']) ? $VALIDATION->input($_POST['event_id']) : "");
+    $package_id = (isset($_POST['package_id']) ? $VALIDATION->input($_POST['package_id']) : "");
+    $status = (isset($_POST['status']) ? $VALIDATION->input($_POST['status']) : "");
+
+    $CUSTOMER->customer_update([$name, $email, $company, $country, 1, $user]);
+    $REGISTRATION->registration_update([$code, $type, $package_id, $status, $uuid]);
+
+    $VALIDATION->alert("success", "ดำเนินการเรียบร้อย!", "/registration");
   } catch (PDOException $e) {
     die($e->getMessage());
   }
@@ -90,14 +134,13 @@ if ($action === "import") {
         $email = (isset($value[3]) ? $value[3] : "");
         $company = (isset($value[4]) ? $value[4] : "");
         $type = (isset($value[5]) ? $value[5] : "");
-        $type_id = $REGISTRATION->type_id([$type]);
         $event = (isset($value[6]) ? $value[6] : "");
         $event_id = $REGISTRATION->event_id([$event]);
         $package = (isset($value[7]) ? $value[7] : "");
         $package_id = $REGISTRATION->package_id([$event_id, $package]);
 
-        $count = $CUSTOMER->customer_count([$customer, $email, $company, $country_id]);
-        if (intval($count) === 0) {
+        $count = $CUSTOMER->customer_count([$customer, $country_id]);
+        if (intval($count) === 0 && !empty($code) && !empty($customer)) {
           $CUSTOMER->customer_insert([$customer, $email, $company, $country_id]);
         }
       }
@@ -113,39 +156,14 @@ if ($action === "import") {
         $email = (isset($value[3]) ? $value[3] : "");
         $company = (isset($value[4]) ? $value[4] : "");
         $type = (isset($value[5]) ? $value[5] : "");
-        $type_id = $REGISTRATION->type_id([$type]);
         $event = (isset($value[6]) ? $value[6] : "");
         $event_id = $REGISTRATION->event_id([$event]);
         $package = (isset($value[7]) ? $value[7] : "");
         $package_id = $REGISTRATION->package_id([$event_id, $package]);
 
-        $count = $REGISTRATION->registration_count([$event_id, $package_id, $type_id]);
-        if (intval($count) === 0) {
-          $REGISTRATION->registration_insert([$event_id, $package_id, $type_id]);
-        }
-      }
-    }
-
-    foreach ($data as $key => $value) {
-      if (!in_array($key, [0])) {
-        $code = (isset($value[0]) ? $value[0] : "");
-        $customer = (isset($value[1]) ? $value[1] : "");
-        $customer_id = $REGISTRATION->customer_id([$customer]);
-        $country = (isset($value[2]) ? $value[2] : "");
-        $country_id = $REGISTRATION->country_id([$country]);
-        $email = (isset($value[3]) ? $value[3] : "");
-        $company = (isset($value[4]) ? $value[4] : "");
-        $type = (isset($value[5]) ? $value[5] : "");
-        $type_id = $REGISTRATION->type_id([$type]);
-        $event = (isset($value[6]) ? $value[6] : "");
-        $event_id = $REGISTRATION->event_id([$event]);
-        $package = (isset($value[7]) ? $value[7] : "");
-        $package_id = $REGISTRATION->package_id([$event_id, $package]);
-        $registration_id = $REGISTRATION->registration_id([$event_id, $package_id, $type_id]);
-
-        $count = $REGISTRATION->item_count([$registration_id, $code, $customer_id]);
-        if (intval($count) === 0) {
-          $REGISTRATION->item_insert([$registration_id, $code, $customer_id]);
+        $count = $REGISTRATION->registration_count([$code, $customer_id, $type, $event_id, $package_id]);
+        if (intval($count) === 0 && !empty($code) && !empty($customer)) {
+          $REGISTRATION->registration_insert([$code, $customer_id, $type, $event_id, $package_id]);
         }
       }
     }
@@ -158,7 +176,21 @@ if ($action === "import") {
 
 if ($action === "data") {
   try {
-    $result = $REGISTRATION->registration_data();
+    $type = (isset($_POST['type']) ? $VALIDATION->input($_POST['type']) : "");
+    $country = (isset($_POST['country']) ? $VALIDATION->input($_POST['country']) : "");
+    $package = (isset($_POST['package']) ? $VALIDATION->input($_POST['package']) : "");
+
+    $result = $REGISTRATION->registration_data($type, $country, $package);
+    echo json_encode($result);
+  } catch (PDOException $e) {
+    die($e->getMessage());
+  }
+}
+
+if ($action === "type-select") {
+  try {
+    $keyword = (isset($_POST['q']) ? $VALIDATION->input($_POST['q']) : "");
+    $result = $REGISTRATION->type_select($keyword);
     echo json_encode($result);
   } catch (PDOException $e) {
     die($e->getMessage());
@@ -180,16 +212,6 @@ if ($action === "package-select") {
     $keyword = (isset($_POST['q']) ? $VALIDATION->input($_POST['q']) : "");
     $event = (isset($_POST['event']) ? $VALIDATION->input($_POST['event']) : "");
     $result = $REGISTRATION->package_select($keyword, [$event]);
-    echo json_encode($result);
-  } catch (PDOException $e) {
-    die($e->getMessage());
-  }
-}
-
-if ($action === "type-select") {
-  try {
-    $keyword = (isset($_POST['q']) ? $VALIDATION->input($_POST['q']) : "");
-    $result = $REGISTRATION->type_select($keyword);
     echo json_encode($result);
   } catch (PDOException $e) {
     die($e->getMessage());

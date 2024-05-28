@@ -35,7 +35,7 @@ $STYLEHEADER = [
 ];
 
 $data = $CUSTOMER->customer_export();
-$columns = ["NAME", "E-MAIL", "COUNTRY", "STATUS", "CREATED"];
+$columns = ["NAME", "E-MAIL", "COMPANY", "COUNTRY", "STATUS", "CREATED"];
 
 ob_start();
 $date = date('Y-m-d');

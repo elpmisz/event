@@ -12,7 +12,7 @@ $id = (isset($param[0]) ? $param[0] : die(header("Location: /error")));
 use App\Classes\Registration;
 
 $REGISTRATION = new Registration();
-$row = $REGISTRATION->item_detail([$id]);
+$row = $REGISTRATION->item_detail([$uuid]);
 ?>
 <!DOCTYPE html>
 <html lang="en">

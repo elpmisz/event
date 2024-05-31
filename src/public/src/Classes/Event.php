@@ -41,6 +41,28 @@ class Event
     return $stmt->execute($data);
   }
 
+  public function registration_all()
+  {
+    $sql = "SELECT COUNT(*) total
+    FROM event.`registration` a";
+    $stmt = $this->dbcon->prepare($sql);
+    $stmt->execute();
+    $row = $stmt->fetch();
+    return (!empty($row['total']) ? $row['total'] : 0);
+  }
+
+  public function registration_package()
+  {
+    $sql = "SELECT b.`name` package,COUNT(*) total
+    FROM event.`registration` a
+    LEFT JOIN event.event_item b
+    ON a.package = b.id
+    GROUP BY a.package";
+    $stmt = $this->dbcon->prepare($sql);
+    $stmt->execute();
+    return $stmt->fetchAll();
+  }
+
   public function event_view($data)
   {
     $sql = "SELECT * FROM event.event_request a WHERE a.uuid = ?";

@@ -11,6 +11,7 @@ use App\Classes\Event;
 $EVENT = new Event();
 $row = $EVENT->event_view([$uuid]);
 $items = $EVENT->item_view([$uuid]);
+$tables = $EVENT->registration_package();
 $id = (!empty($row['id']) ? $row['id'] : "");
 $uuid = (!empty($row['uuid']) ? $row['uuid'] : "");
 $name = (!empty($row['name']) ? $row['name'] : "");
@@ -65,6 +66,34 @@ $inactive = (!empty($row['status']) && intval($row['status']) === 2 ? "checked" 
               <input type="text" class="form-control form-control-sm date-input" name="date" value="<?php echo $date ?>" required>
               <div class="invalid-feedback">
                 กรุณากรอกข้อมูล!
+              </div>
+            </div>
+          </div>
+
+          <div class="row mb-2">
+            <label class="col-xl-2 offset-xl-2 col-form-label">ตารางสรุป</label>
+            <div class="col-xl-4">
+              <div class="table-responsive">
+                <table class="table table-bordered table-sm">
+                  <thead>
+                    <tr>
+                      <th width="70%">แพ็คเกจ</th>
+                      <th width="30%">จำนวน</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <?php foreach ($tables as $table) : ?>
+                      <tr>
+                        <td><?php echo $table['package'] ?></td>
+                        <td class="text-right"><?php echo $table['total'] ?></td>
+                      </tr>
+                    <?php endforeach; ?>
+                    <tr>
+                      <td class="text-center">รวม</td>
+                      <td class="text-right h5"><?php echo $EVENT->registration_all(); ?></td>
+                    </tr>
+                  </tbody>
+                </table>
               </div>
             </div>
           </div>

@@ -72,24 +72,28 @@ $inactive = (!empty($row['status']) && intval($row['status']) === 2 ? "checked" 
 
           <div class="row mb-2">
             <label class="col-xl-2 offset-xl-2 col-form-label">ตารางสรุป</label>
-            <div class="col-xl-4">
+            <div class="col-xl-6">
               <div class="table-responsive">
                 <table class="table table-bordered table-sm">
                   <thead>
                     <tr>
-                      <th width="70%">แพ็คเกจ</th>
+                      <th width="10%">QR CODE</th>
+                      <th width="60%">แพ็คเกจ</th>
                       <th width="30%">จำนวน</th>
                     </tr>
                   </thead>
                   <tbody>
                     <?php foreach ($tables as $table) : ?>
                       <tr>
+                        <td class="text-center">
+                          <a href="/registration/qrcode-report/<?php echo $table['id'] ?>" class="badge badge-danger" target="_blank">QR CODE</a>
+                        </td>
                         <td><?php echo $table['package'] ?></td>
                         <td class="text-right"><?php echo $table['total'] ?></td>
                       </tr>
                     <?php endforeach; ?>
                     <tr>
-                      <td class="text-center">รวม</td>
+                      <td colspan="2" class="text-center">รวม</td>
                       <td class="text-right h5"><?php echo $EVENT->registration_all(); ?></td>
                     </tr>
                   </tbody>

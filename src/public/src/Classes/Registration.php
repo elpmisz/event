@@ -51,7 +51,7 @@ class Registration
   public function registration_view($data)
   {
     $sql = "SELECT a.id,a.uuid,a.code,b.uuid user,b.`name` customer_name,b.country,c.name_en country_name,
-    b.email,b.company,a.`type`,a.event,d.`name` event_name,a.package,e.`name` package_name,
+    b.email,b.company,a.`type`,a.event,d.`name` event_name, d.topic, d.date,a.package,e.`name` package_name,
     a.status,
     DATE_FORMAT(a.created, '%d/%m/%Y, %H:%i น.') created
     FROM event.registration a
@@ -67,6 +67,27 @@ class Registration
     $stmt = $this->dbcon->prepare($sql);
     $stmt->execute($data);
     return $stmt->fetch();
+  }
+
+  public function event_view($data)
+  {
+    $sql = "SELECT a.id,a.uuid,a.code,b.uuid user,b.`name` customer_name,b.country,c.name_en country_name,
+    b.email,b.company,a.`type`,a.event,d.`name` event_name, d.topic, d.date,a.package,e.`name` package_name,
+    a.status,
+    DATE_FORMAT(a.created, '%d/%m/%Y, %H:%i น.') created
+    FROM event.registration a
+    LEFT JOIN event.customer b
+    ON a.`user` = b.id
+    LEFT JOIN event.country c
+    ON b.country = c.id
+    LEFT JOIN event.event_request d
+    ON a.`event` = d.id
+    LEFT JOIN event.event_item e
+    ON a.package = e.id
+    WHERE e.id = ?";
+    $stmt = $this->dbcon->prepare($sql);
+    $stmt->execute($data);
+    return $stmt->fetchAll();
   }
 
   public function registration_export()
@@ -106,7 +127,6 @@ class Registration
     $row = $stmt->fetch();
     return (!empty($row['id']) ? $row['id'] : "");
   }
-
 
   public function event_id($data)
   {

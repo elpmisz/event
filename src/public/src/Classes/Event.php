@@ -53,11 +53,12 @@ class Event
 
   public function registration_package()
   {
-    $sql = "SELECT b.`name` package,COUNT(*) total
+    $sql = "SELECT b.id,b.`name` package,COUNT(*) total
     FROM event.`registration` a
     LEFT JOIN event.event_item b
     ON a.package = b.id
-    GROUP BY a.package";
+    GROUP BY a.package
+    ORDER BY b.name ASC";
     $stmt = $this->dbcon->prepare($sql);
     $stmt->execute();
     return $stmt->fetchAll();

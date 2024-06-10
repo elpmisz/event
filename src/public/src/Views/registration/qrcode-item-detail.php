@@ -7,12 +7,12 @@ date_default_timezone_set("Asia/Bangkok");
 include_once(__DIR__ . "/../../../vendor/autoload.php");
 
 $param = (isset($params) ? explode("/", $params) : die(header("Location: /error")));
-$id = (isset($param[0]) ? $param[0] : die(header("Location: /error")));
+$uuid = (isset($param[0]) ? $param[0] : die(header("Location: /error")));
 
 use App\Classes\Registration;
 
 $REGISTRATION = new Registration();
-$row = $REGISTRATION->item_detail([$uuid]);
+$row = $REGISTRATION->registration_view([$uuid]);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -93,7 +93,7 @@ $row = $REGISTRATION->item_detail([$uuid]);
             <div class="row mb-2">
               <label class="col-xl-2 offset-xl-2 col-form-label">TYPE</label>
               <div class="col-xl-6 text-underline">
-                <?php echo $row['type_name'] ?>
+                <?php echo $row['type'] ?>
               </div>
             </div>
           </div>

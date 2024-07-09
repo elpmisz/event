@@ -4,12 +4,12 @@ $page = "setting-customer";
 include_once(__DIR__ . "/../layout/header.php");
 
 $param = (isset($params) ? explode("/", $params) : die(header("Location: /error")));
-$uuid = (isset($param[0]) ? $param[0] : die(header("Location: /error")));
+$id = (isset($param[0]) ? $param[0] : die(header("Location: /error")));
 
 use App\Classes\Customer;
 
 $CUSTOMER = new Customer();
-$row = $CUSTOMER->customer_view([$uuid]);
+$row = $CUSTOMER->customer_view([$id]);
 $id = (!empty($row['id']) ? $row['id'] : "");
 $uuid = (!empty($row['uuid']) ? $row['uuid'] : "");
 $name = (!empty($row['name']) ? $row['name'] : "");
@@ -72,7 +72,7 @@ $inactive = (!empty($row['status']) && intval($row['status']) === 2 ? "checked" 
           <div class="row mb-2">
             <label class="col-xl-2 offset-xl-2 col-form-label">ประเทศ</label>
             <div class="col-xl-4">
-              <select class="form-control form-control-sm country-select" name="country" required>
+              <select class="form-control form-control-sm country-select" name="country">
                 <?php
                 if (!empty($row['country'])) {
                   echo "<option value='{$row['country']}' selected>{$row['country_name']}</option>";

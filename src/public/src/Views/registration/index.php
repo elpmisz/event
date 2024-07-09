@@ -152,7 +152,7 @@ include_once(__DIR__ . "/../layout/header.php");
   $(document).on("click", ".btn-delete", function(e) {
     let uuid = ($(this).prop("id") ? $(this).prop("id") : "");
 
-    e.prregistrationDefault();
+    e.preventDefault();
     Swal.fire({
       title: "ยืนยันที่จะทำรายการ?",
       icon: "question",

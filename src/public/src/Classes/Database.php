@@ -9,7 +9,7 @@ class Database
 {
   private $dbCon = null;
   private $dbStmt = null;
-  private $dbHost = "database";
+  private $dbHost = "localhost";
   private $dbUser = "promptdev";
   private $dbPass = "SILm2n4y5QJQp#7bwPb8";
   private $dbName = "event";

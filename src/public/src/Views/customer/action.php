@@ -68,7 +68,7 @@ if ($action === "edit") {
     $country = (isset($_POST['country']) ? $VALIDATION->input($_POST['country']) : "");
     $status = (isset($_POST['status']) ? $VALIDATION->input($_POST['status']) : "");
 
-    $CUSTOMER->customer_update([$name, $email, $company, $country, $status, $uuid]);
+    $CUSTOMER->customer_update([$name, $email, $company, $country, $status, $id]);
     $VALIDATION->alert("success", "ดำเนินการเรียบร้อย!", "/customer");
   } catch (PDOException $e) {
     die($e->getMessage());

@@ -218,7 +218,7 @@ class Event
 
     $data = [];
     foreach ($result as $row) {
-      $status = "<a href='/event/edit/{$row['uuid']}' class='badge badge-{$row['status_color']} font-weight-light'>{$row['status_name']}</a> <a href='javascript:void(0)' class='badge badge-danger font-weight-light btn-delete' id='{$row['uuid']}'>ลบ</a>";
+      $status = "<a href='/event/edit/{$row['uuid']}' class='badge badge-{$row['status_color']} font-weight-light'>{$row['status_name']}</a>";
       $data[] = [
         $status,
         $row['name'],

@@ -50,7 +50,7 @@ class Registration
 
   public function registration_view($data)
   {
-    $sql = "SELECT a.id,a.uuid,a.code,b.uuid user,b.`name` customer_name,b.country,c.name_en country_name,
+    $sql = "SELECT a.id,a.uuid,a.code,b.id user,b.`name` customer_name,b.country,c.name_en country_name,
     b.email,b.company,a.`type`,a.event,d.`name` event_name, d.topic, d.date,a.package,e.`name` package_name,
     a.status,
     DATE_FORMAT(a.created, '%d/%m/%Y, %H:%i น.') created
@@ -286,8 +286,7 @@ class Registration
     $data = [];
     foreach ($result as $row) {
       $status = "<a href='/registration/qrcode-item/{$row['uuid']}' class='badge badge-info font-weight-light' target='_blank'>QR CODE</a>
-      <a href='/registration/edit/{$row['uuid']}' class='badge badge-{$row['status_color']} font-weight-light'>{$row['status_name']}</a> 
-      <a href='javascript:void(0)' class='badge badge-danger font-weight-light btn-delete' id='{$row['uuid']}'>ลบ</a>";
+      <a href='/registration/edit/{$row['uuid']}' class='badge badge-{$row['status_color']} font-weight-light'>{$row['status_name']}</a>";
       $data[] = [
         $status,
         $row['code'],

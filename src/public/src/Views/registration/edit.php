@@ -110,7 +110,7 @@ $inactive = (!empty($row['status']) && intval($row['status']) === 2 ? "checked" 
           <div class="row mb-2">
             <label class="col-xl-2 offset-xl-2 col-form-label">COUNTRY</label>
             <div class="col-xl-4">
-              <select class="form-control form-control-sm country-select" name="country" required>
+              <select class="form-control form-control-sm country-select" name="country">
                 <?php echo "<option value='{$country}'>{$country_name}</option>"; ?>
               </select>
               <div class="invalid-feedback">

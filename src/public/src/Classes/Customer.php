@@ -49,7 +49,7 @@ class Customer
     FROM event.customer a
     LEFT JOIN event.country b
     ON a.country = b.id
-    WHERE a.`uuid` = ?";
+    WHERE a.id = ?";
     $stmt = $this->dbcon->prepare($sql);
     $stmt->execute($data);
     return $stmt->fetch();
@@ -64,7 +64,7 @@ class Customer
     country = ?,
     status = ?,
     updated = NOW()
-    WHERE uuid = ?";
+    WHERE id = ?";
     $stmt = $this->dbcon->prepare($sql);
     return $stmt->execute($data);
   }
@@ -163,7 +163,7 @@ class Customer
 
     $data = [];
     foreach ($result as $row) {
-      $status = "<a href='/customer/edit/{$row['uuid']}' class='badge badge-{$row['status_color']} font-weight-light'>{$row['status_name']}</a> <a href='javascript:void(0)' class='badge badge-danger font-weight-light btn-delete' id='{$row['uuid']}'>ลบ</a>";
+      $status = "<a href='/customer/edit/{$row['id']}' class='badge badge-{$row['status_color']} font-weight-light'>{$row['status_name']}</a> <a href='javascript:void(0)' class='badge badge-danger font-weight-light btn-delete' id='{$row['id']}'>ลบ</a>";
       $data[] = [
         $status,
         $row['name'],
